@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="patron-dues-section">
+        <div class="patron-due-date-block-student-div">
+            <h3>Students</h3>
+            <div class="patron-due-dates-student-download-pdf-div">
+                <a class="patron-due-dates-student-download-pdf-function"
+                   href="{% url 'due-dates-pdf-students' %}">
+                    Download PDF for Students
+                </a>
+            </div>
+            {% for checkin in overdue_check %}
+                <div class="patron-due-date-block-student">
+                    <div class="patron-due-dates-student-name-div" id="patron-student-name-block{{ checkin.id }}">
+                        <p>Patron: <a href="{% url 'patron-borrows' checkin.id %}">{{ checkin.patron }}</a></p>
+                        <div class="patron-due-dates-student-btn-container-div">
+                            <button class="patron-due-dates-students-btn" id="patron-students-due-dates-btn{{ checkin.id }}">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                    <div class="patron-due-dates-student-details" id="patron-due-dates-students-details{{ checkin.id }}">
+                        <div class="due-dates-students-borrowed-books-header">
+                            Borrowed Books:
+                        </div>
+                        <div class="due-dates-borrowed-books-div">
+                            <table>
+                                {% for book in checkin.books.all %}
+                                <tr>
+                                    <td>Book Title: </td>
+                                    <td class="due-date-borrowed-book">{{ book.title }}</td>
+                                </tr>
+                                {% empty %}
+                                    Cleared
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div class="patron-due-dates-thin-line-divider"></div>
+                        <div class="due-dates-lower-information-table-div">
+                            <table>
+                                <tr>
+                                    <td>Fine Amount: </td>
+                                    <td>&#8369 {{ checkin.fine_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Deadline: </td>
+                                    <td>{{ checkin.deadline }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+            <div>
+                No due dates
+            </div>
+            {% endfor %}
+        </div>
+        <div class="patron-due-date-block-faculty-div">
+            <h3>Faculty</h3>
+            <div class="patron-due-dates-faculty-download-pdf-div">
+                <a class="patron-due-dates-faculty-download-pdf-function"
+                        href="{% url 'due-dates-pdf-faculty' %}">
+                    Download PDF for Faculty
+                </a>
+            </div>
+            {% for faculty in overdue_checkins_faculty %}
+                <div class="patron-due-date-block-faculty">
+                    <div class="patron-due-dates-faculty-name-div" id="patron-due-date-name{{ faculty.id }}">
+                        <p>Patron: <a href="{% url 'patron-borrows' faculty.id %}">{{ faculty.patron }}</a></p>
+                        <div class="patron-due-dates-student-btn-container-div">
+                            <button class="patron-due-dates-faculty-btn" id="patron-faculty-due-dates-btn{{ faculty.id }}">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                    <div class="patron-due-dates-faculty-details" id="patron-due-dates-faculty-details{{ faculty.id }}">
+                        <div class="due-dates-students-borrowed-books-header">
+                            Borrowed Books:
+                        </div>
+                        <div class="due-dates-borrowed-books-div">
+                            <table>
+                                {% for book in faculty.books.all %}
+                                <tr>
+                                    <td>Book Title: </td>
+                                    <td class="due-date-borrowed-book">{{ book.title }}</td>
+                                </tr>
+                                {% empty %}
+                                    Cleared
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div class="patron-due-dates-thin-line-divider"></div>
+                        <div class="due-dates-lower-information-table-div">
+                            <table>
+                                <tr>
+                                    <td>Fine Amount: </td>
+                                    <td>&#8369 {{ faculty.fine_amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Deadline</td>
+                                    <td>{{ faculty.deadline }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+            <div>
+                No due dates
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleFacultyButtons = document.querySelectorAll('.patron-due-dates-faculty-btn');
+            const toggleStudentButtons = document.querySelectorAll('.patron-due-dates-students-btn');
+
+            toggleFacultyButtons.forEach(FacultyButton => {
+                FacultyButton.addEventListener('click', () => {
+                    const FacultyId = FacultyButton.id.replace('patron-faculty-due-dates-btn', '');
+                    const FacultyDetailsElement = document.getElementById(`patron-due-dates-faculty-details${FacultyId}`);
+                    const PatronNameBlock = document.getElementById(`patron-due-date-name${FacultyId}`);
+
+                    // Toggle the 'details-visible' class to trigger the transition
+                    FacultyDetailsElement.classList.toggle('faculty-details-visible');
+                    PatronNameBlock.classList.toggle('faculty-name-block-remove-bottom-radius');
+
+                    // Update the button text based on the visibility state
+                    FacultyButton.innerHTML =  FacultyDetailsElement.classList.contains('faculty-details-visible') ? "-" : "+";
+
+                    // Handle other buttons
+                    toggleFacultyButtons.forEach(otherFacultyButton => {
+                        if (otherFacultyButton !== FacultyButton) {
+                            otherFacultyButton.innerHTML = "+";
+                            const otherFacultyId = otherFacultyButton.id.replace('patron-faculty-due-dates-btn', '');
+                            const otherFacultyElement = document.getElementById(`patron-due-dates-faculty-details${otherFacultyId}`);
+                            const OtherPatronNameBlock = document.getElementById(`patron-due-date-name${otherFacultyId}`);
+                            otherFacultyElement.classList.remove('faculty-details-visible');
+                            OtherPatronNameBlock.classList.remove('faculty-name-block-remove-bottom-radius');
+                        }
+                    });
+                });
+            });
+
+            toggleStudentButtons.forEach(StudentButton => {
+                StudentButton.addEventListener('click', () => {
+                    const StudentId = StudentButton.id.replace('patron-students-due-dates-btn', '');
+                    const StudentDetailsElement = document.getElementById(`patron-due-dates-students-details${StudentId}`);
+                    const PatronStudentNameBlock = document.getElementById(`patron-student-name-block${StudentId}`);
+
+                    // Toggle the 'details-visible' class to trigger the transition
+                    StudentDetailsElement.classList.toggle('student-details-visible');
+                    PatronStudentNameBlock.classList.toggle('faculty-name-block-remove-bottom-radius');
+
+                    // Update the button text based on the visibility state
+                    StudentButton.innerHTML =  StudentDetailsElement.classList.contains('student-details-visible') ? "-" : "+";
+
+                    // Handle other buttons
+                    toggleStudentButtons.forEach(otherStudentButton => {
+                        if (otherStudentButton !== StudentButton) {
+                            otherStudentButton.innerHTML = "+";
+                            const otherStudentId = otherStudentButton.id.replace('patron-students-due-dates-btn', '');
+                            const otherStudentElement = document.getElementById(`patron-due-dates-faculty-details${otherStudentId}`);
+                            const OtherPatronStudentNameBlock = document.getElementById(`patron-student-name-block${otherFacultyId}`);
+                            otherStudentElement.classList.remove('faculty-details-visible');
+                            OtherPatronStudentNameBlock.classList.remove('faculty-name-block-remove-bottom-radius');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

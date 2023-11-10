@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section id="paid-fines-utmost-container-section">
+        <div class="paid-fines-table-container-div">
+            <table class="paid-fines-table">
+                <tr class="paid-fines-table-row">
+                    <th class="paid-fines-table-head">Patron</th>
+                    <th class="paid-fines-table-head">Patron Department</th>
+                    <th class="paid-fines-table-head">Patron Position</th>
+                    <th class="paid-fines-table-head">Patron Course</th>
+                    <th class="paid-fines-table-head">Fine Paid</th>
+                    <th class="paid-fines-table-head">Date Paid</th>
+                </tr>
+                {% for paid in fine_paid %}
+                    <tr class="paid-fines-table-row">
+                        <td class="paid-fines-table-data">{{ paid.patron }}</td>
+                        <td class="paid-fines-table-data">{{ paid.department }}</td>
+                        <td class="paid-fines-table-data">{{ paid.position }}</td>
+                        <td class="paid-fines-table-data">{{ paid.course }}</td>
+                        <td class="paid-fines-table-data">{{ paid.fine_paid }}</td>
+                        <td class="paid-fines-table-data"> {{ paid.date_paid }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+</body>
+</html>

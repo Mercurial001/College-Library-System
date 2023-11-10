@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="no-deadline-patron-section">
+        <div class="no-deadline-checkin-utmost-container-div">
+            <div class="no-checkin-deadline-heading-div">
+                <h1>Unconfirmed CheckIns</h1>
+            </div>
+            <div class="no-checkin-download-pdf-function-div">
+                <a class="no-checkin-download-pdf-function" href="{% url 'no-deadline-checkin-pdf' %}">Download PDF</a>
+            </div>
+            <div class="no-checkin-deadline-content-container-div">
+                {% for checkin in no_deadline %}
+                    <a href="{% url 'patron-borrows' checkin.id %}">
+                        <div class="no-checkin-deadline-div">
+                            <div class="no-check-in-deadline-detail">
+                                <p>{{ checkin.patron }}</p>
+                            </div>
+                            <div class="no-check-in-deadline-detail" id="no-check-in-deadline-date">
+                                <p>{{ checkin.date_borrowed|date:"F d, Y" }}</p>
+                            </div>
+                        </div>
+
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

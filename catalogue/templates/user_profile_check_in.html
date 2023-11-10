@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <section id="user-profile-check-in-section">
+    <div class="user-profile-check-in-utmost-container-div">
+        <div class="user-profile-book-check-in-title-heading-div">
+            <h1>borrow a book</h1>
+        </div>
+        <section class="user-patron-check-in-form-section">
+            {% if user == request.user %}
+                <div class="patron-profile-check-in-form-container">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="patron-field" style="display: none">
+                            {{ borrow_form.patron }}
+                        </div>
+                        <div>
+                            {{ borrow_form.books }}
+                        </div>
+                        <button class="patron-user-check-in-btn" name="patron-borrow-form" type="submit">Borrow Book</button>
+                    </form>
+                </div>
+            {% else %}
+
+            {% endif %}
+        </section>
+    </div>
+  </section>
+{% endblock %}

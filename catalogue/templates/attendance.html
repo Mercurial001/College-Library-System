@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>LMS Attendance</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" href="{% static 'images/promethoenix-removebg-preview.png' %}" type="image/icon type">
+</head>
+<body class="attendance-body">
+    <section class="attendance-section">
+        <div class="attendance-for-attendance-utmost-container-div">
+            <div class="attendance-heading-div">
+                <h1 class="attendance-for-attendance-heading-h1">
+                    Enter Your Library Username
+                </h1>
+            </div>
+            <div class="attendance-message-div">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="attendance-message-container-div">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="attendance-form-field-container-div">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {{ form.name }}
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="circulation-section">
+        <div class="circulation-showcase-div">
+            <div class="circulation-link-container-div">
+                <div class="circulation-title-div">
+                    <h1>CIRCULATION</h1>
+                </div>
+                <a href="{% url 'confirming' %}">
+                    <div class="circulation-link-container" id="registering-circulation-link-div">
+                        <div class="circulation-detail-div">
+                            <div>
+                                <i class="fa fa-user-plus"></i>
+                            </div>
+                            <div class="link-container-description-div">
+                                Registering Patrons
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'check-in' %}">
+                    <div class="circulation-link-container" id="check-in-circulation-link-div">
+                        <div class="circulation-detail-div">
+                            <div>
+                                <i class="fa fa-mail-forward"></i>
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                            </div>
+                            <div class="link-container-description-div">
+                                Check In
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'check-out' %}">
+                    <div class="circulation-link-container" id="check-out-circulation-link-div">
+                        <div class="circulation-detail-div ">
+                            <div>
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                                <i class="fa fa-level-down"></i>
+                            </div>
+                            <div class="link-container-description-div">
+                                Check Out
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'reserve' %}">
+                    <div class="circulation-link-container" id="reservation-circulation-link-div">
+                        <div class="circulation-detail-div">
+                            <div>
+                                <i class="fa fa-calendar-check-o"></i>
+                            </div>
+                            <div class="link-container-description-div">
+                                Reservation
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="search-engine-patron-search-div">
+                <form class="search-engine-patron-search" method="GET" action="{% url 'profile' %}">
+                    <span class="search-engine-lens-icon">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input class="circulation-patron-search-field" type="text" name="q" placeholder="Search patron">
+                    <button class="circulation-search-btn" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="circulation-search-result-div">
+            {% if patrons %}
+                <div class="search-result-header-div">
+                    <h1>SEARCH RESULTS</h1>
+                </div>
+                <div class="search-result-circulation-div">
+                    <ul>
+                    {% for patron in patrons %}
+                        {% for pat in patron_link %}
+                            {% if pat.patron == patron %}
+                                <div class="circulation-patron-instance-result-div">
+                                    <li>Patron Username: <a href="{% url 'patron-borrows' pat.id %}">{{ patron }}</a></li>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                {% if request.GET.q %}
+                    <div class="search-result-header-div">
+                        <h1>SEARCH RESULTS</h1>
+                    </div>
+                    <p>No results found.</p>
+                {% else %}
+                    <div class="circulation-initial-search-div">
+                        <p>
+                            Search for borrowing patrons
+                        </p>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

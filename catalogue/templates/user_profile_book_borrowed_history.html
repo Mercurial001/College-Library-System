@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="user-profile-book-borrowed-history-section">
+        <div class="user-profile-book-borrowed-history-heading">
+            <h1>Book Borrowed History</h1>
+        </div>
+        <div>
+            {% if user == request.user %}
+                {% for history in book_history %}
+                    {% for book in history.books.all %}
+                        <div class="user-profile-borrowed-book-div">
+                            {{ book.title }} {{ history.date_borrowed }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

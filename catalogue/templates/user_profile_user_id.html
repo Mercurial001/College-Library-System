@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="user-profile-user-identification-data-utmost-container-section">
+        <div class="user-profile-user-id-container-div">
+            <div class="user-profile-id-username-header-div">
+                {{ user.username }}
+            </div>
+            <div class="user-profile-id-information-and-qr-code-container-div">
+                <div class="user-profile-id-information-container-div">
+                    <table class="user-profile-id-table">
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">First Name:</th>
+                            <td class="user-profile-id-table-data">{{ user.first_name }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Last Name:</th>
+                            <td class="user-profile-id-table-data">{{ user.last_name }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Email:</th>
+                            <td class="user-profile-id-table-data">{{ user.email }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Department:</th>
+                            <td class="user-profile-id-table-data">{{ user.department }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Course:</th>
+                            <td class="user-profile-id-table-data">{{ user.course }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Position:</th>
+                            <td class="user-profile-id-table-data">{{ user.position }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Contact Number:</th>
+                            <td class="user-profile-id-table-data">{{ user.contact_no }}</td>
+                        </tr>
+                        <tr class="user-profile-id-table-row">
+                            <th class="user-profile-id-table-head">Address:</th>
+                            <td class="user-profile-id-table-data">{{ user.address }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="user-profile-id-qr-code-container">
+                    <img id="user-profile-library-id-qr-code" src="{% static 'images/' %}QR-Code-{{ user.username }}.png">
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

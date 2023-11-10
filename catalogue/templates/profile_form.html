@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="patron-registration-container-div">
+        <div class="message-box-container-div">
+            <div class="message-box">
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}
+                            <span class="close-btn">
+                                <i id="close-btn" class="fa fa-window-close" aria-hidden="true"></i>
+                            </span>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <form class="registration-from-div" method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            font-size:11px;
+        }
+        table{
+          font-size:11px;
+          border-collapse: collapse;
+          text-align:center;
+        }
+        td{
+            border-top:0.5px solid rgb(119, 119, 120);
+            border-bottom:0.5px solid rgb(119, 119, 120);
+        }
+        th{
+            background-color:rgb(24, 69, 66);
+            color:beige;
+        }
+    </style>
+</head>
+<body>
+    {% for author, authors_book in author_books.items %}
+        <div class="detail-container">
+            <h3>Author: {{ author }}</h3>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Subject</th>
+                    <th>Edition</th>
+                    <th>Call Number</th>
+                    <th>Material</th>
+                    <th>Sub-type</th>
+                    <th>Place of Publication</th>
+                    <th>Date of Publication</th>
+                    <th>Copyright</th>
+                    <th>LCCN</th>
+                    <th>ISBN</th>
+                    <th>ISSN</th>
+                    <th>Extent</th>
+                    <th>Size</th>
+                    <th>Other Details</th>
+                </tr>
+                {% for book in authors_book %}
+                <tr>
+                    <div class="thin-line"></div>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.subject }}</td>
+                    <td>{{ book.edition }}</td>
+                    <td>{{ book.call_number }}</td>
+                    <td>{{ book.material }}</td>
+                    <td>{{ book.sub_type }}</td>
+                    <td>{{ book.info_place }}</td>
+                    <td>{{ book.info_date }}</td>
+                    <td>{{ book.info_copyright }}</td>
+                    <td>{{ book.lccn }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.issn }}</td>
+                    <td>{{ book.extent }}</td>
+                    <td>{{ book.size }}</td>
+                    <td>{{ book.other_details }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endfor %}
+</body>
+</html>

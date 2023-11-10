@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <section class="reports-section">
+        <div class="reports-link-div">
+            <div class="reports-title-div">
+                <h1>Reports</h1>
+            </div>
+            <div class="reports-link-container-div">
+                <a href="{% url 'subjects' %}">
+                    <div class="report-link-container" id="report-link-container-subjects">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-edit"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Subjects
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'alphabetical' %}">
+                    <div class="report-link-container" id="report-link-container-book-title">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Book Title
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'authors' %}">
+                    <div class="report-link-container" id="report-link-container-author">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Author
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'available-books' %}">
+                    <div class="report-link-container" id="report-link-container-available-books">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-check-circle"></i>
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Available Books
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'borrowed-books' %}">
+                    <div class="report-link-container" id="report-link-container-borrowed-books">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-exchange"></i>
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Borrowed Books
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'reserved-books' %}">
+                    <div class="report-link-container" id="report-link-container-reserved-books">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-bookmark"></i>
+                                <i class="fa fa-book"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Reserved Books
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'no_deadline_checkin' %}">
+                    <div class="report-link-container" id="report-link-container-no-deadlines">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-calendar-minus-o"></i>
+                            </div>
+                            <div class="report-description-div">
+                                No Deadline Check-Ins
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'attendance-list' %}">
+                    <div class="report-link-container" id="report-link-container-attendance">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-group"></i>
+                                <i class="fa fa-check-circle"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Attendance
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'unpaid-fines' %}">
+                    <div class="report-link-container" id="report-link-container-unpaid-fines">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-times-circle"></i>
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Unpaid Fines
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{% url 'paid-fines' %}">
+                    <div class="report-link-container" id="report-link-container-paid-fines">
+                        <div class="report-link-details">
+                            <div class="report-icon-container-div">
+                                <i class="fa fa-check-circle"></i>
+                                <i class="fa fa-money"></i>
+                            </div>
+                            <div class="report-description-div">
+                                Paid Fines
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

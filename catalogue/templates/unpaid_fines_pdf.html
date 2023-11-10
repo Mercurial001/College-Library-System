@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <section id="unpaid-fines-utmost-container-section">
+        <table>
+            <tr>
+                <th>Patron</th>
+                <th>Patron Department</th>
+                <th>Patron Position</th>
+                <th>Patron Course</th>
+                <th>Fine Amount</th>
+                <th></th>
+            </tr>
+            {% for unpaid in unpaid_fine %}
+                <tr>
+                    <td>{{ unpaid.patron }}</td>
+                    <td>{{ unpaid.patron.department }}</td>
+                    <td>{{ unpaid.patron.position }}</td>
+                    <td>{{ unpaid.patron.course }}</td>
+                    <td>{{ unpaid.fine_amount }}</td>
+                    <td>
+                        <a href="{% url 'fines-paid-cash' unpaid.patron %}">Pay Fine</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+</body>
+</html>

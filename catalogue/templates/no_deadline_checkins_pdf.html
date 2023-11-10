@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .no-checkin-deadline-heading-div{
+            background-color: rgb(5, 50,50);
+            color: beige;
+            font-family: Lato;
+            text-align: center;
+            padding: 1px;
+        }
+
+        .no-checkin-deadline-div{
+            background-color: rgba(67, 204, 197, 0.3);
+            color: rgb(50, 50, 50);
+            font-weight: 800;
+            padding: 10px;
+            margin: auto;
+            margin-top: 20px;
+            margin-left:40px;
+            width: 90%;
+            font-size: 20px;
+            border-radius: 8px;
+            border: 1px solid rgb(6, 194, 185);
+            transition: all 0.5s ease;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        .no-checkin-deadline-div:hover{
+            margin-left: 60px;
+            box-shadow: rgba(0, 0, 0, 0.50) 0px 5px 15px;
+        }
+
+        .no-check-in-deadline-detail{
+            display: inline-block;
+        }
+
+        #no-check-in-deadline-date{
+            float: right;
+            margin-right: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="no-deadline-checkin-utmost-container-div">
+        <div class="no-checkin-deadline-heading-div">
+            <h1>Unconfirmed CheckIns</h1>
+        </div>
+        <div class="no-checkin-deadline-content-container-div">
+            {% for checkin in no_deadline %}
+                <a href="{% url 'patron-borrows' checkin.id %}">
+                    <div class="no-checkin-deadline-div">
+                        <div class="no-check-in-deadline-detail">
+                            <p>{{ checkin.patron }}</p>
+                        </div>
+                        <div class="no-check-in-deadline-detail" id="no-check-in-deadline-date">
+                            <p>{{ checkin.date_borrowed|date:"F d, Y" }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

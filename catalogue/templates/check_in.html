@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="check-in-section-container">
+        <div class="check-in-heading-title-div">
+            Check In
+        </div>
+        <div class="check-in-utmost-container-div">
+            <section class="check-in-form-container-section">
+                <div class="message-box-container-div">
+                    <div class="message-box">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{ message }}
+                                    <span class="close-btn">
+                                        <i id="close-btn" class="fa fa-window-close" aria-hidden="true"></i>
+                                    </span>
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="check-in-form-field-upper-part-container-div">
+                        <div class="check-in-field-container-upper-part-div">
+                            <div class="check-in-field-label-container-upper-div">
+                                {{ form.patron.label }}
+                            </div>
+                            <div class="check-in-form-field-upper-div">
+                                {{ form.patron }}
+                            </div>
+                        </div>
+                        <div class="check-in-field-container-upper-part-div">
+                            <div class="check-in-field-label-container-upper-div">
+                                {{ form.deadline.label }}
+                            </div>
+                            <div class="check-in-form-field-upper-div">
+                                {{ form.deadline }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="check-in-form-field-books-container-div">
+                        <div class="check-in-form-books-label-div">
+                            {{ form.books.label }}
+                        </div>
+                        <div class="check-in-form-books-field-div">
+                            {{ form.books }}
+                        </div>
+                    </div>
+                    <div class="check-btn-container-div">
+                        <button class="check-in-borrow-book-patron-btn" type="submit">Borrow Books for Patron</button>
+                    </div>
+                </form>
+            </section>
+            <section class="patron-check-in-section">
+                <div class="check-in-patron-checkins-container-div">
+                    <table class="check-in-table">
+                        <tr class="check-in-table-row">
+                            <th class="check-in-table-head">Patron Name</th>
+                            <th class="check-in-table-head">Date Borrowed</th>
+                        </tr>
+                        {% for patron in filtered_patron %}
+                            <tr class="check-in-table-row">
+                                <td class="check-in-table-data">
+                                    <a class="check-in-patron-profile-link" href="{% url 'patron-borrows' patron.id %}">
+                                        {{ patron.patron }}
+                                    </a>
+                                </td>
+                                <td class="check-in-table-data">{{ patron.date_borrowed }} </td>
+                            </tr>
+                        {% empty %}
+                            <tr class="check-in-table-row">
+                                <td id="attendance-no-record-date" colspan="5">No checkins</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </section>
+        </div>
+    </section>
+
+{% endblock %}

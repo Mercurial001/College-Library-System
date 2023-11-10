@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .reserved-books-heading-div{
+            background-color: rgb(5, 50,50);
+            padding: 1px;
+            text-align: center;
+            color: beige;
+        }
+
+        .reserved-books-table{
+            border-radius: 5px;
+            border-collapse: collapse;
+            margin: auto;
+            margin-top: 40px;
+            width: 90%;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        .reserved-books-table-head{
+            font-family: Lato;
+            text-transform: uppercase;
+            border-radius: 5px;
+            background-color: rgb(5, 50, 50);
+            color: beige;
+        }
+
+        .reserved-books-table-head p{
+            text-align: center;
+        }
+
+        .reserved-books-table-head,.reserved-books-table-data{
+            border: 1px solid rgb(206, 245, 242);
+            text-align: left;
+            padding: 8px;
+        }
+
+        .reserved-books-table-data{
+            font-weight: 800;
+            border-radius: 5px;
+        }
+        .reserved-books-table-row:nth-child(odd) {
+            color: rgb(30, 30, 30);
+        }
+
+        .reserved-books-table-row{
+            border-radius: 5px;
+        }
+
+        .reserved-books-table-row:nth-child(even) {
+            background-color: rgb(3, 153, 142);
+            color: beige; !important
+        }
+    </style>
+</head>
+<body>
+    <div class="reserved-books-utmost-container-div">
+        <div class="reserved-books-heading-div">
+            <h1>Reserved Books</h1>
+        </div>
+        <div class="reserved-books-table-container-div">
+            <table class="reserved-books-table">
+                <tr class="reserved-books-table-row">
+                    <th class="reserved-books-table-head">
+                        <p>Reserved Books</p>
+                    </th>
+                    <th class="reserved-books-table-head">
+                        <p>Patron</p>
+                    </th>
+                    <th class="reserved-books-table-head">
+                        <p>Reserved Date</p>
+                    </th>
+                </tr>
+            {% for reserved_books in books %}
+                {% for book in reserved_books.books.all %}
+                    <tr class="reserved-books-table-row">
+                        <td class="reserved-books-table-data">{{ book.title }}</td>
+                        <td class="reserved-books-table-data">{{ reserved_books.patron }}</td>
+                        <td class="reserved-books-table-data">{{ book.date_reserved }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

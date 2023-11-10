@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="reservation-profile-details-section">
+        <div class="reservation-profile-utmost-container-div">
+            {% for reservations in patron_reservation %}
+                <div class="reservation-profile-information-detail-board">
+                    <div class="reservation-profile-patron-heading-container-div">
+                        {{ reservations.patron }}
+                    </div>
+                    <div class="reservation-profile-book-reserved-container-div">
+                        <div class="reservation-profile-reserved-books-heading-container-div">
+                            <h3>Reserved Books</h3>
+                        </div>
+                        <div class="reservation-profile-reserved-books-container-div">
+                            {% for book in reservations.books.all %}
+                                <div class="reservation-profile-book-div">
+                                    Book Title: <span class="reservation-profile-book-title">{{ book.title }}</span>
+                                    <a class="reservation-profile-link-to-borrow-func" href="{% url 'reservation-borrow' book.isbn reservations.id reservations.patron.id %}">
+                                        Transfer to Borrow
+                                    </a>
+                                </div>
+                            {% empty %}
+                                <p>Cleared</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

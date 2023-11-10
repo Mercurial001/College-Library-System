@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Prometheus Library Management System</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" href="{% static 'images/promethoenix-removebg-preview.png' %}" type="image/icon type">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/htmx.org@latest/dist/htmx.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <!-- Include the widget's CSS and JavaScript -->
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}">
+</head>
+<body>
+    <section id="section-header" class="inline-block-element">
+        <header id="main-header">
+<!--            <div class="image-container">-->
+<!--                <img class="pit-logo" src="{% static 'images/black_bg-removebg-preview.png' %}">-->
+<!--            </div>-->
+            <div class="image-container">
+                Company Logo
+            </div>
+            <div class="thin-line"></div>
+            <ul class="links">
+                <li class="link">
+                    <a class="url-link" href="{% url 'homepage' %}"><i class="fa fa-home"></i> Home</a>
+                </li>
+                {% if request.user == user and user.is_authenticated and user.is_superuser %}
+                <li class="link">
+                    <a class="url-link" href="{% url 'dashboard' %}"><i class="fa fa-line-chart"></i> Dashboard</a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'cataloging' %}"><i class="fa fa-pencil-square-o"></i> Catalogue</a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'details' %}"><i class="fa fa-info-circle"></i> Catalogued Details</a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'reports' %}"><i class="fa fa-files-o"></i> Reports</a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'profile' %}"><i class="fa fa-refresh"></i> Circulation</a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'notifications' %}"><i class="fa fa-calendar-times-o"></i> Due-Dates</a>
+                    {% if overdue_checkins.count > 0 %}
+                    <span class="due-date-count">{{ overdue_checkins.count }}</span>
+                    {% else %}
+                    <span></span>
+                    {% endif %}
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'admin:index' %}">
+                        <i class="fa fa-user-o"></i>
+                        <i class="fa fa-cog" style="font-size:15px; margin-left:-10px;"></i> Admin</a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+                </li>
+                {% elif user.is_authenticated and not request.user.is_superuser %}
+                <li class="link">
+                    <a class="url-link" href="{% url 'user-profile' request.user %}">
+                        <i class="fa fa-user-circle-o"></i> {{ request.user }}
+                    </a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'user-profile-id' request.user %}">
+                        <i class="fa fa-id-card"></i> Library ID
+                    </a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'user-profile-check-in' request.user %}">
+                        <i class="fa fa-book" aria-hidden="true"></i> Check In
+                    </a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'user-profile-reserve' request.user %}">
+                        <i class="fa fa-bookmark"></i> Book Reserve
+                    </a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'user-profile-history' request.user %}">
+                        <i class="fa fa-history"></i> History
+                    </a>
+                </li>
+                <li class="link">
+                    <a class="url-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+                </li>
+                {% else %}
+                <li class="link">
+                    <a class="url-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </header>
+        <footer id="main-footer">
+            &copy; Copyright - 2023 Company Name <!--Promethoenix-->
+        </footer>
+    </section>
+
+    <!--    <section style="padding:5px; overflow:hidden;"></section>-->
+    {% block content %}
+        <section id="base-template-block-content-section">
+            <section class="showcase-section">
+                <div class="showcase-section-title-div">
+                    <h1>Company Name</h1>
+                    <h3>Library Management System</h3>
+                </div>
+                <div class="search-engine-div">
+                    <form method="GET" action="{% url 'homepage' %}">
+                        <span class="home-search-engine-lens-icon">
+                            <i class="fa fa-search"></i>
+                        </span>
+                        <input id="search-field-books" type="text" name="q" placeholder="Search books">
+                        <button id="search-field-books-btn" type="submit">Search</button>
+                    </form>
+                </div>
+            </section>
+            <section class="search-result-section">
+                <div class="search-engine-container-divs">
+                    {% if books %}
+                    <div class="tryer">
+                        <h1 class="search-result-header">Search Results</h1>
+                        <div class="book-details-container">
+                            {% for book in books %}
+                                <div class="toggle-detail-btn-div">
+                                    <div class="book-title-span">
+                                        Book Title:
+                                        <span>
+                                            {{ book.title }}
+                                        </span>
+                                        {% if user.is_authenticated and not request.user.is_superuser and book.book_status.id == 2 %}
+                                            <div class="book-reserve-check-in-functions-container-div">
+                                                <span>
+                                                    <a class="book-reserve-check-in-function"
+                                                       href="{% url 'borrow-search-book' request.user book.id %}">
+                                                        Borrow This Book
+                                                    </a>
+                                                </span>
+                                                <span>
+                                                    <a class="book-reserve-check-in-function"
+                                                       href="{% url 'reserve-search-book' request.user book.id %}">
+                                                        Reserve This Book
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        {% elif user.is_authenticated and not request.user.is_superuser and book.book_status.id == 1 %}
+                                            <div class="book-user-side-book-status-div">
+                                                {{ book.book_status }}
+                                            </div>
+                                        {% elif user.is_authenticated and not request.user.is_superuser and book.book_status.id == 3 %}
+                                            <div class="book-user-side-book-status-div">
+                                                {{ book.book_status }}
+                                            </div>
+                                        {% elif request.user == user and user.is_authenticated and user.is_superuser %}
+
+                                        {% elif not user.is_authenticated %}
+
+                                        {% endif %}
+                                    </div>
+                                    <button class="toggle-title-btn" id="toggleBtn{{ book.id }}">Show Details</button>
+                                </div>
+                                <div class="book-details-table" id="bookDetails{{ book.id }}">
+                                    <table>
+                                        <tr>
+                                            <td>Status</td>
+                                            <td>{{ book.book_status }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subject:</td>
+                                            <td>{{ book.subject }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subtitle:</td>
+                                            <td>{{ book.subtitle }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Material:</td>
+                                            <td>{{ book.material }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sub-Type:</td>
+                                            <td>{{ book.sub_type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Call Number:</td>
+                                            <td>{{ book.call_number }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Edition:</td>
+                                            <td>{{ book.edition }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>LCCN:</td>
+                                            <td>{{ book.lccn }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ISBN:</td>
+                                            <td>{{ book.isbn }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ISSN:</td>
+                                            <td>{{ book.issn }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Author:</td>
+                                            <td>{{ book.author_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date:</td>
+                                            <td>{{ book.date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Place of Publication:</td>
+                                            <td>{{ book.info_place }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Publisher:</td>
+                                            <td>{{ book.publisher }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date of Publication:</td>
+                                            <td>{{ book.info_date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Copyright:</td>
+                                            <td>{{ book.info_copyright }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Extent:</td>
+                                            <td>{{ book.extent }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other Details:</td>
+                                            <td>{{ book.other_details }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Size:</td>
+                                            <td>{{ book.size }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="search-engine-div">
+                            {% if request.GET.q %}
+                                <h1>Search Results</h1>
+                                <p>No results found.</p>
+                            {% else %}
+                                <div class="about-desc-div">
+                                    <h1>About</h1>
+                                    <div>
+                                        <p>
+                                            {% for description in description_about %}
+                                                {{ description.content | safe }}
+                                            {% endfor %}
+                                        </p>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+        </section>
+
+    {% endblock %}
+<!--    <footer id="main-footer">
+        &copy; Copyright - 2023 Promethoenix
+    </footer>-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButtons = document.querySelectorAll('.toggle-title-btn');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const bookId = button.id.replace('toggleBtn', '');
+                    const bookDetailsElement = document.getElementById(`bookDetails${bookId}`);
+
+                    // Toggle the 'details-visible' class to trigger the transition
+                    bookDetailsElement.classList.toggle('details-visible');
+
+                    // Update the button text based on the visibility state
+                    button.innerHTML = bookDetailsElement.classList.contains('details-visible') ? "Show Less" : "Show Details";
+
+                    // Handle other buttons
+                    toggleButtons.forEach(otherButton => {
+                        if (otherButton !== button) {
+                            otherButton.innerHTML = "Show Details";
+                            const otherBookId = otherButton.id.replace('toggleBtn', '');
+                            const otherBookDetailsElement = document.getElementById(`bookDetails${otherBookId}`);
+                            otherBookDetailsElement.classList.remove('details-visible');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+<!--<div class="toggle-detail-btn-div">-->
+<!--    <div class="book-title-span">Book Title: <span>{{ book.title }}</span></div>-->
+<!--    <button class="toggle-title-btn" id="toggleBtn{{ book.id }}">Show Details</button>-->
+<!--</div>-->
+<!--<div class="book-details-table" id="bookDetails{{ book.id }}">-->
+
+<!--        const bookDetails = document.querySelectorAll('.book-details-table');-->
+
+<!--        // Add event listeners to each toggle button-->
+<!--        const toggleButtons = document.querySelectorAll('.toggle-title-btn');-->
+
+<!--        toggleButtons.forEach(button => {-->
+<!--            button.addEventListener('click', () => {-->
+<!--                // Get the corresponding book details div-->
+<!--                const bookId = button.id.replace('toggleBtn', '');-->
+<!--                const bookDetailsElement = document.getElementById(`bookDetails${bookId}`);-->
+
+<!--                // Iterate over all book details elements and hide them-->
+<!--                bookDetails.forEach(detail => {-->
+<!--                    if (detail !== bookDetailsElement) {-->
+<!--                        // detail.style.display = 'none';-->
+<!--                        detail.style.maxHeight = '0';-->
+<!--                    }-->
+<!--                });-->
+
+<!--                // Toggle the display of the clicked book details-->
+<!--                if (bookDetailsElement.style.maxHeight === '0' || bookDetailsElement.style.maxHeight === '') {-->
+<!--                    bookDetailsElement.style.maxHeight = bookDetailsElement.scrollHeight + 'px';-->
+<!--                    button.innerHTML = "Show Less";-->
+<!--                } else {-->
+<!--                    bookDetailsElement.style.maxHeight = '0';-->
+<!--                    button.innerHTML = "Show Details";-->
+<!--                }-->
+
+<!--                toggleButtons.forEach(otherButton => {-->
+<!--                    if (otherButton !== button) {-->
+<!--                        otherButton.innerHTML = "Show Details";-->
+<!--                    }-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+
+<!--        const bookDetails = document.querySelectorAll('.book-details-table');-->
+
+<!--        // Add event listeners to each toggle button-->
+<!--        const toggleButtons = document.querySelectorAll('.toggle-title-btn');-->
+
+<!--        toggleButtons.forEach(button => {-->
+<!--            button.addEventListener('click', () => {-->
+<!--                // Get the corresponding book details div-->
+<!--                const bookId = button.id.replace('toggleBtn', '');-->
+<!--                const bookDetailsElement = document.getElementById(`bookDetails${bookId}`);-->
+
+<!--                // Iterate over all book details elements and hide them-->
+<!--                bookDetails.forEach(detail => {-->
+<!--                    if (detail !== bookDetailsElement) {-->
+<!--                        detail.style.display = 'none';-->
+<!--                    }-->
+<!--                });-->
+
+<!--                // Toggle the display of the clicked book details-->
+<!--                if (bookDetailsElement.style.display === 'none' || bookDetailsElement.style.display === '') {-->
+<!--                    bookDetailsElement.style.display = 'block';-->
+<!--                    button.innerHTML = "Show Less";-->
+<!--                } else {-->
+<!--                    bookDetailsElement.style.display = 'none';-->
+<!--                    button.innerHTML = "Show Details";-->
+<!--                }-->
+
+<!--                toggleButtons.forEach(otherButton => {-->
+<!--                    if (otherButton !== button) {-->
+<!--                        otherButton.innerHTML = "Show Details";-->
+<!--                    }-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+    <script src="{% static 'main.js' %}"></script>
+</body>
+</html>
+
+
+
+
+
+<!--    {% for books in book_brief_title %}-->
+<!--        <div>-->
+<!--            {{ books.title }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.sub_type }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.material }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.subtitle }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.authors }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.edition }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.lccn }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.ibsn }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            {{ books.issn }}-->
+<!--        </div>-->
+<!--    {% endfor %}-->

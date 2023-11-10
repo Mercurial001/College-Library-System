@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="borrowed-books-sorting-section">
+        <div class="borrowed-books-table-container-div">
+            <div class="borrowed-book-heading-div">
+                Borrowed Books
+            </div>
+            <div class="borrowed-book-download-pdf-div">
+                <a class="borrowed-book-download-pdf-function" href="{% url 'borrowed-books-pdf' %}">Download PDF</a>
+            </div>
+            <table class="borrowed-books-table">
+                <tr class="borrowed-books-table-row">
+                    <th class="borrowed-books-table-head">
+                        {% if active_books_sum_books_borrowed > 1 %}
+                            <p>Books Borrowed</p>
+                        {% else %}
+                            <p>Book Borrowed</p>
+                        {% endif %}
+                    </th>
+                    <th class="borrowed-books-table-head">
+                        <p>Borrowed By</p>
+                    </th>
+                    <th class="borrowed-books-table-head">
+                        <p>Borrowed On</p>
+                    </th>
+                </tr>
+                {% for checkin in books %}
+                    {% for book in checkin.books.all %}
+                    <tr class="borrowed-books-table-row">
+                        <td class="borrowed-books-table-data">{{ book.title }}</td>
+                        <td class="borrowed-books-table-data">{{ checkin.patron }}</td>
+                        <td class="borrowed-books-table-data">{{ book.date_borrowed }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="books-sorted-by-subject-section">
+        <div class="subject-report-title-heading-div">
+            <h1>Books Sorted by Subjects</h1>
+        </div>
+        <div class="subjects-report-download-pdf-div">
+            <a class="subjects-report-download-pdf-function-link" href="{% url 'subjects-pdf' %}">Download PDF</a>
+        </div>
+        <section class="subjects-report-section">
+            {% for subject, books in grouped_books.items %}
+                <div class="subjects-container-div">
+                    <div class="subjects-title-container-div">
+                        <h3>{{ subject }}</h3>
+                    </div>
+                    {% for book in books %}
+                        <div class="subjects-report-book-title-div">
+                            <div>
+                                {{ book.title }}
+                            </div>
+                            <div>
+                                <button class="toggle-title-btn" id="toggleBtn{{ book.id }}">Show Details</button>
+                            </div>
+                        </div>
+                        <div class="book-details-table" id="bookDetails{{ book.id }}">
+                            <table>
+                                <tr>
+                                    <td>Subtitle:</td>
+                                    <td>{{ book.subtitle }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Material:</td>
+                                    <td>{{ book.material }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sub-Type:</td>
+                                    <td>{{ book.sub_type }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Call Number:</td>
+                                    <td>{{ book.call_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edition:</td>
+                                    <td>{{ book.edition }}</td>
+                                </tr>
+                                <tr>
+                                    <td>LCCN:</td>
+                                    <td>{{ book.lccn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>ISBN:</td>
+                                    <td>{{ book.isbn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>ISSN:</td>
+                                    <td>{{ book.issn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Author:</td>
+                                    <td>{{ book.author_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td>{{ book.date }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Place of Publication:</td>
+                                    <td>{{ book.info_place }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Publisher:</td>
+                                    <td>{{ book.publisher }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Publication:</td>
+                                    <td>{{ book.info_date }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Copyright:</td>
+                                    <td>{{ book.info_copyright }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Extent:</td>
+                                    <td>{{ book.extent }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Other Details:</td>
+                                    <td>{{ book.other_details }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Size:</td>
+                                    <td>{{ book.size }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </section>
+    </section>
+
+{% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButtons = document.querySelectorAll('.toggle-title-btn');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const bookId = button.id.replace('toggleBtn', '');
+                    const bookDetailsElement = document.getElementById(`bookDetails${bookId}`);
+
+                    bookDetailsElement.classList.toggle('details-visible');
+
+                    button.innerHTML = bookDetailsElement.classList.contains('details-visible') ? "Show Less" : "Show Details";
+
+                    toggleButtons.forEach(otherButton => {
+                        if (otherButton !== button) {
+                            otherButton.innerHTML = "Show Details";
+                            const otherBookId = otherButton.id.replace('toggleBtn', '');
+                            const otherBookDetailsElement = document.getElementById(`bookDetails${otherBookId}`);
+                            otherBookDetailsElement.classList.remove('details-visible');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+<!--    <script>-->
+<!--        document.addEventListener('DOMContentLoaded', () => {-->
+<!--            const toggleButtons = document.querySelectorAll('.toggle-subject-details-btn');-->
+
+<!--            toggleButtons.forEach(button => {-->
+<!--                button.addEventListener('click', () => {-->
+<!--                    const bookId = button.id.replace('toggleBtnSubjects', '');-->
+<!--                    const bookDetailsElement = document.getElementById(`bookSubjectDetails${bookId}`);-->
+
+<!--                    // Toggle the 'details-visible' class to trigger the transition-->
+<!--                    bookDetailsElement.classList.toggle('subject-details-visible');-->
+
+<!--                    // Update the button text based on the visibility state-->
+<!--                    button.innerHTML = bookDetailsElement.classList.contains('subject-details-visible') ? "Show Less" : "Show Details";-->
+
+<!--                    // Handle other buttons-->
+<!--                    toggleButtons.forEach(otherButton => {-->
+<!--                        if (otherButton !== button) {-->
+<!--                            otherButton.innerHTML = "Show Details";-->
+<!--                            const otherBookId = otherButton.id.replace('toggleBtnSubjects', '');-->
+<!--                            const otherBookDetailsElement = document.getElementById(`bookSubjectDetails${otherBookId}`);-->
+<!--                            otherBookDetailsElement.classList.remove('subject-details-visible');-->
+<!--                        }-->
+<!--                    });-->
+<!--                });-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section>
+        <h2>Patrons Borrows</h2>
+        <div>
+            <table>
+                <tr>
+                    <th>Patron Name</th>
+                    <th>Date Borrowed</th>
+                </tr>
+                {% for patrons_nation in yasha %}
+                    <div>
+                        {{ patrons_nation.patron }}
+                    </div>
+                {% endfor %}
+                {% for patron in filtered_patron %}
+                    <tr>
+                        <td><a href="{% url 'patron-borrows' patron.id %}">{{ patron.patron }}</a></td>
+                        <td>{{ patron.date_borrowed }} </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td>No Borrowing Patrons</td>
+                        <td>N/A</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+
+
+{% endblock %}

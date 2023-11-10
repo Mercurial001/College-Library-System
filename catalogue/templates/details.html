@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="catalogued-container-section">
+        <div class="catalogued-details-utmost-container-div">
+            {% for details in detail %}
+                <table class="catalogued-detail-container">
+                    <tr>
+                        <td>Status: </td>
+                        <td>{{ details.book_status }}</td>
+                    </tr>
+                    <tr>
+                        <td>Title: </td>
+                        <td>{{ details.title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Subject: </td>
+                        <td>{{ details.subject }}</td>
+                    </tr>
+                    <tr>
+                        <td>Material:</td>
+                        <td>{{ details.material }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sub-Type:</td>
+                        <td>{{ details.sub_type }}</td>
+                    </tr>
+                    <tr>
+                        <td>Call Number:</td>
+                        <td>{{ details.call_number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Edition:</td>
+                        <td>{{ details.edition }}</td>
+                    </tr>
+                    <tr>
+                        <td>LCCN:</td>
+                        <td>{{ details.lccn }}</td>
+                    </tr>
+                    <tr>
+                        <td>IBSN:</td>
+                        <td>{{ details.isbn }}</td>
+                    </tr>
+                    <tr>
+                        <td>ISSN:</td>
+                        <td>{{ details.issn }}</td>
+                    </tr>
+                    <tr>
+                        <td>Author:</td>
+                        <td>{{ details.author_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td>{{ details.date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Place of Publication</td>
+                        <td>{{ details.info_place }}</td>
+                    </tr>
+                    <tr>
+                        <td>Publisher</td>
+                        <td>{{ details.publisher }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of Publication</td>
+                        <td>{{ details.info_date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Copyright Date</td>
+                        <td>{{ details.info_copyright }}</td>
+                    </tr>
+                    <tr>
+                        <td>Extent</td>
+                        <td>{{ details.extent }}</td>
+                    </tr>
+                    <tr>
+                        <td>Other Details</td>
+                        <td>{{ details.other_details }}</td>
+                    </tr>
+                    <tr>
+                        <td>Size:</td>
+                        <td>{{ details.size }}</td>
+                    </tr>
+                </table>
+            {% empty %}
+            <div>
+                <h1>No Catalogued Books</h1>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

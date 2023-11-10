@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="registrant-confirmation-section">
+        <div class="registrant-confirmation-link-to-registrant-list">
+            <a href="{% url 'confirming' %}">
+                <i class="fa fa-list-alt"></i>
+                Back to Patron Confirmation List
+            </a>
+        </div>
+        <div class="registrant-confirmation-container-div">
+            {% for patron in registering_patrons %}
+                <div class="registrant-confirmation-function-link-container-div">
+                    <a class="registrant-confirmation-link-to-function" id="registrant-confirmation-verified" href="{% url 'confirm' patron.username %}">
+                        Verify Registration
+                    </a>
+                    <a class="registrant-confirmation-link-to-function" id="registrant-confirmation-denied" href="{% url 'decline' patron.username %}">
+                        Deny Registration
+                    </a>
+                </div>
+                <div class="registrant-confirmation-detail-heading-div">
+                    <div class="registrant-confirmation-information-title-heading">
+                        Registrant Information
+                    </div>
+                </div>
+                <div class="registrant-confirmation-detail-container-div">
+                    <table class="registrant-confirmation-table">
+                        <tr class="registrant-confirmation-table-row">
+                            <td class="registrant-confirmation-table-data-heading">Registrant Username:</td>
+                            <td class="registrant-confirmation-table-data">{{ patron.username }}</td>
+                        </tr>
+                        <tr class="registrant-confirmation-table-row">
+                            <td class="registrant-confirmation-table-data-heading">Registrant Name:</td>
+                            <td class="registrant-confirmation-table-data">
+                                {{ patron.first_name }} {{ patron.last_name }}
+                            </td>
+                        </tr>
+                        <tr class="registrant-confirmation-table-row">
+                            <td class="registrant-confirmation-table-data-heading">Registrant Department:</td>
+                            <td class="registrant-confirmation-table-data">
+                                {{ patron.department }}
+                            </td>
+                        </tr>
+                        <tr class="registrant-confirmation-table-row">
+                            <td class="registrant-confirmation-table-data-heading">
+                                Registrant Course:
+                            </td>
+                            <td class="registrant-confirmation-table-data">
+                                {{ patron.course }}
+                            </td>
+                        </tr>
+                        <tr class="registrant-confirmation-table-row">
+                            <td class="registrant-confirmation-table-data-heading">Registrant Position:</td>
+                            <td class="registrant-confirmation-table-data">
+                                {{ patron.position }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="registrant-confirmation-document-container-div">
+                    <div class="registrant-confirmation-document-title-heading-div">
+                        Registrant Identification Photo
+                    </div>
+                    {% if patron.patron_id %}
+                        <button class="registrant-confirmation-image-btn">
+                            <img class="registrant-confirmation-patron-id-img" src="{{ patron.patron_id.url }}">
+                        </button>
+                    {% endif %}
+                    <div class="registrant-confirmation-close-div">
+                        <div class="registrant-confirmation-preview-img-div">
+                            <div class="registrant-confirmation-close-btn-div">
+                                <button class="registrant-confirmation-close-btn">&times;</button>
+                            </div>
+                            {% if patron.patron_id %}
+                                <img class="registrant-confirmation-preview-img" src="{{ patron.patron_id.url }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <script>
+        const image = document.querySelector(".registrant-confirmation-image-btn");
+        const closeBtn = document.querySelector(".registrant-confirmation-close-btn");
+
+        const closeDiv = document.querySelector(".registrant-confirmation-close-div");
+
+        image.addEventListener("click", ()=> {
+            closeDiv.style.display = 'block';
+        });
+
+        closeBtn.addEventListener("click", ()=> {
+            closeDiv.style.display = 'none';
+        });
+    </script>
+{% endblock %}

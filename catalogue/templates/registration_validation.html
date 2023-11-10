@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="registration-validation-section">
+        <div class="registration-validation-utmost-container-div">
+            <div class="registration-validation-form-and-message-container-div">
+                <div class="registration-validation-message-container">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="registration-validation-form-container-div">
+                    <form class="registration-validation-registration-form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="registration-validation-register-field">
+                            {{ form.username }}
+                        </div>
+                        <div>
+                            {{ form.password1 }}
+                        </div>
+                        <div>
+                            {{ form.password2 }}
+                        </div>
+                        <div class="registration-validation-register-name-field">
+                            {{ form.first_name }}
+                        </div>
+                        <div class="registration-validation-register-name-field">
+                            {{ form.last_name }}
+                        </div>
+                        <div class="registration-validation-register-field">
+                            {{ form.email }}
+                        </div>
+                        <div class="registration-validation-select-field-container-div">
+                            <div class="registration-validation-select-field-label">
+                                Department
+                            </div>
+                            <div class="registration-validation-register-field">
+                                {{ form.department }}
+                            </div>
+                        </div>
+                        <div class="registration-validation-select-field-container-div">
+                            <div class="registration-validation-select-field-label">
+                                Course
+                            </div>
+                            <div class="registration-validation-register-field">
+                                {{ form.course }}
+                            </div>
+                        </div>
+                        <div class="registration-validation-select-field-container-div">
+                            <div class="registration-validation-select-field-label">
+                                Position
+                            </div>
+                            <div class="registration-validation-register-field">
+                                {{ form.position }}
+                            </div>
+                        </div>
+                        <div class="registration-validation-field-container-div">
+                            <div class="registration-validation-field-label">
+                                Contact Number
+                            </div>
+                            <div class="registration-validation-register-field">
+                                {{ form.number_loc }} {{ form.contact_no }}
+                            </div>
+                        </div>
+                        <div class="registration-validation-register-field">
+                            {{ form.address }}
+                        </div>
+                        <div class="registration-validation-btn-container">
+                            <button class="registration-validation-registration-btn" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="registration-validation-camera-container-div">
+                <video id="registration-validation-camera" autoplay></video>
+                <script>
+                    const video = document.getElementById('registration-validation-camera');
+                    let stream;
+
+                    // Access the user's camera
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then((videoStream) => {
+                            stream = videoStream;
+                            video.srcObject = stream;
+                        });
+
+                    function stopCamera() {
+                        if (stream) {
+                            const tracks = stream.getTracks();
+                            tracks.forEach(track => track.stop());
+                        }
+                    }
+
+                    // Add an event listener to the form for the submission
+                    const form = document.querySelector('.registration-validation-registration-form');
+                    form.addEventListener('submit', function () {
+                        // Stop the camera when the form is submitted
+                        stopCamera();
+                    });
+                </script>
+            </div>
+        </div>
+    </section>
+{% endblock %}

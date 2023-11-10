@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="reservation-section">
+        <div class="reservation-heading-title-container-div">
+            Reservation
+        </div>
+        <div class="reservation-utmost-container-div">
+            <section class="reservation-form-container-section">
+                <div class="message-box-container-div">
+                    <div class="message-box">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{ message }}
+                                    <span class="close-btn">
+                                        <i id="close-btn" class="fa fa-window-close" aria-hidden="true"></i>
+                                    </span>
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="reservation-form-container-div">
+                    <form class="reservation-form" method="post" action="">
+                        {% csrf_token %}
+                        <div class="reservation-label-and-field-container-div">
+                            <div class="reservation-field-label-div">
+                                {{ form.patron.label }}
+                            </div>
+                            <div class="reservation-field-container-div">
+                                {{ form.patron }}
+                            </div>
+                        </div>
+                        <div class="reservation-label-and-field-container-div">
+                            <div class="reservation-field-label-div">
+                                {{ form.books.label }}
+                            </div>
+                            <div class="reservation-field-container-div">
+                                {{ form.books }}
+                            </div>
+                        </div>
+                        <div class="reservation-btn-container-div">
+                            <button class="reservation-btn" type="submit">Reserve Book</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section class="reservation-patron-reserves-container-div">
+                <table class="reservation-table">
+                    <tr class="reservation-table-row">
+                        <th class="reservation-table-head">Reserved Patron</th>
+                        <th class="reservation-table-head">Date Reserved</th>
+                    </tr>
+                    {% for patron in patron_reservation %}
+                    <tr class="reservation-table-row">
+                        <td class="reservation-table-data">
+                            <a class="reservation-link-to-patron-profile" href="{% url 'reservation-profile' patron.id %}">
+                                {{ patron.patron }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ patron.date_reserved }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr class="reservation-table-row">
+                        <td id="attendance-no-record-date" colspan="5">No Reservation</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </section>
+        </div>
+    </section>
+{% endblock %}

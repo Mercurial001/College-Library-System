@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="check-out-section">
+        <div class="check-out-heading-title-container-div">
+            <h1>Check Out</h1>
+        </div>
+        <div class="check-out-search-container-div">
+            <div class="check-out-search-engine-div">
+                <form method="GET" action="{% url 'check-out' %}">
+                    <span class="check-out-search-icon-span">
+                        <i id="check-out-search-icon" class="fa fa-search"></i>
+                    </span>
+                    <input class="check-out-search-books-field" type="text" name="q" placeholder="Search books">
+                    <button class="check-out-search-book-btn" type="submit">Search</button>
+                </form>
+            </div>
+            <div>
+                {% if books %}
+                    <div class="check-out-search-result-container-div">
+                        <div class="check-out-result-heading-title-div">
+                            <h1>Search Results</h1>
+                            <div class="check-out-search-results-thin-line"></div>
+                        </div>
+                        <div class="check-out-search-result-list-container-div">
+                            <ul class="check-out-unordered-list">
+                            {% for book in books %}
+                                <li class="check-out-result-list">
+                                    <span class="check-out-book-title-span">{{ book.title }}</span>
+                                    <a class="check-out-link-to-return-function" href="{% url 'check-out-book-returns' book.isbn %}">
+                                        Check Out
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% else %}
+                    {% if request.GET.q %}
+                        <div class="check-out-no-result-message-notifier-div">
+                            <h1 class="check-out-no-result-message-notifier">No results found</h1>
+                        </div>
+
+                    {% else %}
+
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+<!--                <h1>Search Results</h1>-->
+<!--                {% for checkin in books %}-->
+<!--                    <h3>Books:</h3>-->
+<!--                    <ul>-->
+<!--                        {% for book in checkin.books.all %}-->
+<!--                            <li>Title: {{ book.title }} <a href="{% url 'check-out-book-returns' book.isbn %}"> Return</a></li>-->
+<!--                        {% endfor %}-->
+<!--                    </ul>-->
+<!--                {% endfor %}-->
+
+<!--        {% for book in borrowed_books %}-->
+<!--            <div>-->
+<!--                {{ book.title }}-->
+<!--            </div>-->
+<!--        {% endfor %}-->

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            font-size:11px;
+        }
+        table{
+          font-size:11px;
+          border-collapse: collapse;
+          text-align:center;
+        }
+        td{
+            border-top:0.5px solid rgb(119, 119, 120);
+            border-bottom:0.5px solid rgb(119, 119, 120);
+        }
+        th{
+            background-color:rgb(24, 69, 66);
+            color:beige;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Edition</th>
+            <th>Subject</th>
+            <th>Call Number</th>
+            <th>Material</th>
+            <th>Sub-type</th>
+            <th>Place of Publication</th>
+            <th>Date of Publication</th>
+            <th>Copyright</th>
+            <th>LCCN</th>
+            <th>ISBN</th>
+            <th>ISSN</th>
+            <th>Extent</th>
+            <th>Size</th>
+            <th>Other Details</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <div class="thin-line"></div>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author_name }}</td>
+            <td>{{ book.edition }}</td>
+            <td>{{ book.subject }}</td>
+            <td>{{ book.call_number }}</td>
+            <td>{{ book.material }}</td>
+            <td>{{ book.sub_type }}</td>
+            <td>{{ book.info_place }}</td>
+            <td>{{ book.info_date }}</td>
+            <td>{{ book.info_copyright }}</td>
+            <td>{{ book.lccn }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.issn }}</td>
+            <td>{{ book.extent }}</td>
+            <td>{{ book.size }}</td>
+            <td>{{ book.other_details }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+<!--    {% for book in books %}-->
+<!--        <div class="detail-container">-->
+<!--            <p>Book Title: <span>{{ book }}</span></p>-->
+<!--            <p>Book Subtitle: <span>{{ book.subtitle }}</span></p>-->
+<!--            <ul>-->
+<!--                <li>Author: <span>{{ book.author_name }}</span></li>-->
+<!--                <li>Subject: <span>{{ book.subject }}</span></li>-->
+<!--                <li>Edition: <span>{{ book.edition }}</span></li>-->
+<!--                <li>Call Number: <span>{{ book.call_number }}</span></li>-->
+<!--                <li>Material: <span>{{ book.material }}</span></li>-->
+<!--                <li>Sub-type: <span>{{ book.sub_type }}</span></li>-->
+<!--                <li>Place of Publication: <span>{{ book.info_place }}</span></li>-->
+<!--                <li>Date of Publication: <span>{{ book.info_date }}</span></li>-->
+<!--                <li>Copyright: <span>{{ book.info_copyright }}</span></li>-->
+<!--                <li>LCCN: <span>{{ book.lccn }}</span></li>-->
+<!--                <li>ISBN: <span>{{ book.isbn }}</span></li>-->
+<!--                <li>ISSN: <span>{{ book.issn }}</span></li>-->
+<!--                <li>Extent: <span>{{ book.extent }}</span></li>-->
+<!--                <li>Size: <span>{{ book.other_details }}</span></li>-->
+<!--                <li>Other Details: <span>{{ book.size }}</span></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
+</body>
+</html>

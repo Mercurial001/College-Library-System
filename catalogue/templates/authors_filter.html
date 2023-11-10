@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="author-sorting-section">
+        <!--        <div class="side-bar">-->
+        <!--            <div class="sidebar-title-sorting-div">-->
+        <!--                <h1>Sort By:</h1>-->
+        <!--            </div>-->
+        <!--            <div>-->
+        <!--                <a href="{% url 'subjects' %}">Subjects</a>-->
+        <!--            </div>-->
+        <!--            <div>-->
+        <!--                <a href="{% url 'alphabetical' %}">Book Title</a>-->
+        <!--            </div>-->
+        <!--            <div>-->
+        <!--                <a href="{% url 'authors' %}">Author</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="author-filter-title-heading-div">
+            <h1>Books Sorted by Author</h1>
+        </div>
+        <div class="author-filter-download-pdf-function-div">
+            <a class="author-filter-download-pdf-function" href="{% url 'authors-pdf' %}">Download PDF</a>
+        </div>
+        <div class="author-filter-report-container-div">
+            {% for author, authors_book in author_books.items %}
+                <div class="author-name-container-div">
+                    <h3>Author: {{ author }}</h3>
+                </div>
+                {% for book in authors_book %}
+                    <div class="toggle-detail-btn-div">
+                        <div class="book-title-span">Book Title: <span>{{ book.title }}</span></div>
+                        <button class="toggle-title-btn" id="toggleBtn{{ book.id }}">Show Details</button>
+                    </div>
+                    <div class="book-details-table" id="bookDetails{{ book.id }}">
+                        <table>
+                            <tr>
+                                <td>Status</td>
+                                <td>{{ book.book_status }}</td>
+                            </tr>
+                            <tr>
+                                <td>Subject:</td>
+                                <td>{{ book.subject }}</td>
+                            </tr>
+                            <tr>
+                                <td>Subtitle:</td>
+                                <td>{{ book.subtitle }}</td>
+                            </tr>
+                            <tr>
+                                <td>Material:</td>
+                                <td>{{ book.material }}</td>
+                            </tr>
+                            <tr>
+                                <td>Sub-Type:</td>
+                                <td>{{ book.sub_type }}</td>
+                            </tr>
+                            <tr>
+                                <td>Call Number:</td>
+                                <td>{{ book.call_number }}</td>
+                            </tr>
+                            <tr>
+                                <td>Edition:</td>
+                                <td>{{ book.edition }}</td>
+                            </tr>
+                            <tr>
+                                <td>LCCN:</td>
+                                <td>{{ book.lccn }}</td>
+                            </tr>
+                            <tr>
+                                <td>ISBN:</td>
+                                <td>{{ book.isbn }}</td>
+                            </tr>
+                            <tr>
+                                <td>ISSN:</td>
+                                <td>{{ book.issn }}</td>
+                            </tr>
+                            <tr>
+                                <td>Author:</td>
+                                <td>{{ book.author_name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date:</td>
+                                <td>{{ book.date }}</td>
+                            </tr>
+                            <tr>
+                                <td>Place of Publication:</td>
+                                <td>{{ book.info_place }}</td>
+                            </tr>
+                            <tr>
+                                <td>Publisher:</td>
+                                <td>{{ book.publisher }}</td>
+                            </tr>
+                            <tr>
+                                <td>Date of Publication:</td>
+                                <td>{{ book.info_date }}</td>
+                            </tr>
+                            <tr>
+                                <td>Copyright:</td>
+                                <td>{{ book.info_copyright }}</td>
+                            </tr>
+                            <tr>
+                                <td>Extent:</td>
+                                <td>{{ book.extent }}</td>
+                            </tr>
+                            <tr>
+                                <td>Other Details:</td>
+                                <td>{{ book.other_details }}</td>
+                            </tr>
+                            <tr>
+                                <td>Size:</td>
+                                <td>{{ book.size }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endfor %}
+
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}

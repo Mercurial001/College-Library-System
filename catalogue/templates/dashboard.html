@@ -1,0 +1,604 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section  class="dashboard-section">
+        <div class="dashboard-title-heading-div">
+            <h1>Dashboard</h1>
+        </div>
+
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <section id="graphs-section">
+            <!-- Place your canvas element here -->
+            <div class="graph-div" id="borrowed-books-analytics-div">
+                <div class="analytics-box-div">
+                    <canvas id="myChart" width="400" height="300"></canvas>
+                </div>
+                <div class="analytics-box-div" id="statistics-borrowed-div">
+                    <div class="borrowed-books-analytics-statistics-div">
+                        <div class="analytics-description-div">
+                            Borrowed Books
+                        </div>
+                        <div class="numerical-data-analytics">
+                            {{ active_books_sum }}
+                        </div>
+                    </div>
+                    <div class="borrowed-books-analytics-statistics-div">
+                        <div class="analytics-description-div">
+                            Daily Borrowed Books
+                        </div>
+                        <div class="numerical-data-analytics">
+                            {% if daily_books_number == None %}
+                                <div>
+                                    0
+                                </div>
+                            {% else %}
+                                {{ daily_books_number }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graph-div" id="reserved-books-analytics-div">
+                <div class="analytics-box-div">
+                    <canvas id="myChartReserves" width="400" height="300"></canvas>
+                </div>
+                <div class="analytics-box-div" id="statistics-reserved-div">
+                    <div class="borrowed-books-analytics-statistics-div">
+                        <div class="analytics-description-div">
+                            Reserved Books
+                        </div>
+                        <div class="numerical-data-analytics">
+                            {{ active_books_reserved_count }}
+                        </div>
+                    </div>
+                    <div class="borrowed-books-analytics-statistics-div">
+                        <div class="analytics-description-div" >
+                            Daily Reserved Books
+                        </div>
+                        <div class="numerical-data-analytics">
+                            {% if daily_books_reserved == None %}
+                                <div>
+                                    0
+                                </div>
+                            {% else %}
+                                {{ daily_books_reserved }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="graph-div" id="check-out-analytics-div">
+                <div class="analytics-box-div">
+                    <canvas id="myChartCheckOut" width="400" height="300"></canvas>
+                </div>
+                <div class="analytics-box-div" id="statistics-checkout-div">
+                    <div class="borrowed-books-analytics-statistics-div">
+                        <div class="analytics-description-div">
+                            Daily Checkouts
+                        </div>
+                        <div class="numerical-data-analytics">
+                            {{ daily_checkouts.count }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="graph-div" id="attendance-analytics-div">
+                <div class="analytics-box-div">
+                    <canvas id="myChartAttendance" width="400" height="300"></canvas>
+                </div>
+                <div class="analytics-box-div" id="statistics-attendance-div">
+                    <div class="borrowed-books-analytics-statistics-div">
+                        <div class="analytics-description-div">
+                            Daily Attendance
+                        </div>
+                        <div class="numerical-data-analytics">
+                            {% if daily_attendance == None %}
+                                <div>
+                                    0
+                                </div>
+                            {% else %}
+                                {{ daily_attendance }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graph-div" id="pie-chart-graph-div">
+                <canvas id="myPieChart" width="280" height="400"></canvas>
+            </div>
+            <div class="graph-div" id="percentage-graph-div">
+                <div class="skill-display-div-loop">
+                    <div class="skill-box-div" >
+                        <div class="skill-name-div">
+                            <h4>Active Patron Borrowing:</h4>
+                        </div>
+                        <div class="skill-color"></div>
+                        <div class="percentage-box-div">
+                            <h4 class="skill-percentage" data-percentage="{{ no_admin }}"></h4>
+                            <div class="container">
+                                <div class="circular-progress-py">
+                                    <div class="value-container-py">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-display-div-loop">
+                    <div class="skill-box-div-books">
+                        <div class="skill-name-div-books">
+                            <h4>Borrowed Books Percentage:</h4>
+                        </div>
+                        <div class="skill-color-books"></div>
+                        <div class="percentage-box-div-books">
+                            <h4 class="skill-percentage-books" data-percentage-books="{{ percentage_borrowed_books }}"></h4>
+                            <div class="container-books">
+                                <div class="circular-progress-py-books">
+                                    <div class="value-container-py-books">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graph-div" id="totality-graph-div">
+                <div class="totality-div">
+                    <div class="totality-description-div">Total Borrowed Books</div>
+                    <div class="totality-amount">{{ total_books_count }}</div>
+                </div>
+                <div class="totality-div">
+                    <div class="totality-description-div">Total Number of Books</div>
+                    <div class="totality-amount">{{ total_books_sum.count }}</div>
+                </div>
+                <div class="totality-div">
+                    <div class="totality-description-div">Total Number of Patrons</div>
+                    <div class="totality-amount">{{ total_patrons }}</div>
+                </div>
+                <div class="totality-div">
+                    <div class="totality-description-div">Total Number of Checkouts</div>
+                    <div class="totality-amount">{{ total_checkouts.count }}</div>
+                </div>
+                <div class="totality-div">
+                    <div class="totality-description-div">Total Number of Attendance</div>
+                    <div class="totality-amount">{{ total_attendance.count }}</div>
+                </div>
+                <div class="totality-div">
+                    <div class="totality-description-div">Total Number of Registration</div>
+                    <div class="totality-amount">{{ declined_registries }}</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!--        <div id="dashboard-element-container">
+                    <section class="percentage-transaction-section">
+                        <div class="skill-display-div-loop">
+                            <div class="skill-box-div" >
+                                <div class="skill-name-div">
+                                    <h4>Active Patron Borrowing:</h4>
+                                </div>
+                                <div class="skill-color"></div>
+                                <div class="percentage-box-div">
+                                    <h4 class="skill-percentage" data-percentage="{{ no_admin }}"></h4>
+                                    <div class="container">
+                                        <div class="circular-progress-py">
+                                            <div class="value-container-py">0%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="skill-display-div-loop">
+                            <div class="skill-box-div-books">
+                                <div class="skill-name-div-books">
+                                    <h4>Borrowed Books Percentage:</h4>
+                                </div>
+                                <div class="skill-color-books"></div>
+                                <div class="percentage-box-div-books">
+                                    <h4 class="skill-percentage-books" data-percentage-books="{{ percentage_borrowed_books }}"></h4>
+                                    <div class="container-books">
+                                        <div class="circular-progress-py-books">
+                                            <div class="value-container-py-books">0%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>-->
+
+
+            <div class="graph-divs">
+                <div class="active-transactions-div">
+                    <div class="active-transactions-amount">
+                        {{ number_of_active_reservations.count }}
+                    </div>
+                    <div>
+                        Number of Reservations
+                    </div>
+                </div>
+                <div class="active-transactions-div">
+                    <a style="text-decoration:none; color: inherit;" href="{% url 'no_deadline_checkin' %}">
+                        <div class="active-transactions-amount">
+                            {{ no_deadline.count }}
+                        </div>
+                        <div>
+                            No Deadline Check-Ins
+                        </div>
+                    </a>
+                </div>
+                <div class="active-transactions-div">
+                    <div class="active-transactions-amount">
+                        {{ registry_for_verification }}
+                    </div>
+                    <div>
+                        Unverified Registrants
+                    </div>
+                </div>
+                <div class="active-transactions-div">
+                    <div class="active-transactions-amount">
+                        {{ faculty_patron_count }}
+                    </div>
+                    <div>
+                        Number of Faculty Patrons
+                    </div>
+                </div>
+                <div class="active-transactions-div">
+                    <div class="active-transactions-amount">
+                        {{ student_patrons_count }}
+                    </div>
+                    <div>
+                        Number of Student Patrons
+                    </div>
+                </div>
+                <div class="active-transactions-div">
+                    <div class="active-transactions-amount">
+                        {{ active_patron_sum }}
+                    </div>
+                    <div>
+                        Number of Borrowing Patrons
+                    </div>
+                </div>
+                <div class="active-transactions-div">
+                    <div class="active-transactions-amount">
+                        {% if daily_registrations == None %}
+                            <div>
+                                0
+                            </div>
+                        {% else %}
+                            {{ daily_registrations }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        Daily Registration
+                    </div>
+                </div>
+            </div>
+
+
+            <!--            <section class="daily-transaction-section">-->
+            <!--                <div class="daily-transaction-div">-->
+            <!--                    <div class="daily-transactions-amount">-->
+            <!--                        {{ daily_checkouts.count }}-->
+            <!--                    </div>-->
+            <!--                    <div>-->
+            <!--                        Daily Checkouts-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="daily-transaction-div">-->
+            <!--                    <div class="daily-transactions-amount">-->
+            <!--                        {% if daily_attendance == None %}-->
+            <!--                            <div>-->
+            <!--                                0-->
+            <!--                            </div>-->
+            <!--                        {% else %}-->
+            <!--                            {{ daily_attendance }}-->
+            <!--                        {% endif %}-->
+            <!--                    </div>-->
+            <!--                    <div>-->
+            <!--                        Daily Attendance-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="daily-transaction-div">-->
+            <!--                    <div class="daily-transactions-amount">-->
+            <!--                        {% if daily_books_number == None %}-->
+            <!--                            <div>-->
+            <!--                                0-->
+            <!--                            </div>-->
+            <!--                        {% else %}-->
+            <!--                            {{ daily_books_number }}-->
+            <!--                        {% endif %}-->
+            <!--                    </div>-->
+            <!--                    <div>-->
+            <!--                        Daily Borrowed Books-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="daily-transaction-div">-->
+            <!--                    <div class="daily-transactions-amount">-->
+            <!--                        {% if daily_books_reserved == None %}-->
+            <!--                            <div>-->
+            <!--                                0-->
+            <!--                            </div>-->
+            <!--                        {% else %}-->
+            <!--                            {{ daily_books_reserved }}-->
+            <!--                        {% endif %}-->
+            <!--                    </div>-->
+            <!--                    <div>-->
+            <!--                        Daily Reserved Books-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </section>-->
+            <!--            <section class="totality-transaction-section">-->
+            <!--                <div class="totality-div">-->
+            <!--                    <div class="totality-amount">{{ total_books_count }}</div>-->
+            <!--                    <div>Total Borrowed Books</div>-->
+            <!--                </div>-->
+            <!--                <div class="totality-div">-->
+            <!--                    <div class="totality-amount">{{ total_books_sum.count }}</div>-->
+            <!--                    <div>Total Number of Books</div>-->
+            <!--                </div>-->
+            <!--                <div class="totality-div">-->
+            <!--                    <div class="totality-amount">{{ total_patrons }}</div>-->
+            <!--                    <div>Total Number of Patrons</div>-->
+            <!--                </div>-->
+            <!--                <div class="totality-div">-->
+            <!--                    <div class="totality-amount">{{ total_checkouts.count }}</div>-->
+            <!--                    <div>Total Number of Checkouts</div>-->
+            <!--                </div>-->
+            <!--                <div class="totality-div">-->
+            <!--                    <div class="totality-amount">{{ total_attendance.count }}</div>-->
+            <!--                    <div>Total Number of Attendance</div>-->
+            <!--                </div>-->
+            <!--                <div class="totality-div">-->
+            <!--                    <div class="totality-amount">{{ declined_registries }}</div>-->
+            <!--                    <div>Total Number of Registration</div>-->
+            <!--                </div>-->
+            <!--            </section>-->
+        </div>
+    </section>
+    <script>
+
+        // Define your data and labels
+
+        var dates_attendance = {{ dates_attendance|safe }};
+        var counts_attendance = {{ counts_attendance|safe }};
+
+        var ctx = document.getElementById('myChartAttendance').getContext('2d');
+
+        var data = {
+          labels: dates_attendance, // Array of dates
+          datasets: [{
+            label: 'Attendance',
+            data: counts_attendance, // Array of book counts
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+
+        // Define your data and labels
+
+        var dates_reserved = {{ dates_reserved|safe }};
+        var book_counts_reserved = {{ book_counts_reserved|safe }};
+
+        var ctx = document.getElementById('myChartReserves').getContext('2d');
+
+        var data = {
+          labels: dates_reserved, // Array of dates
+          datasets: [{
+            label: 'Books Reserved',
+            data: book_counts_reserved, // Array of book counts
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+
+        var dates_checkout = {{ dates_checkout|safe }};
+        var book_counts_checkout = {{ book_counts_checkout|safe }};
+
+        var ctx = document.getElementById('myChartCheckOut').getContext('2d');
+
+        var data = {
+          labels: dates_checkout, // Array of dates
+          datasets: [{
+            label: 'Books CheckOut',
+            data: book_counts_checkout, // Array of book counts
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        // Define your data and labels
+        var dates = {{ dates|safe }};
+        var book_counts = {{ book_counts|safe }};
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var data = {
+          labels: dates, // Array of dates
+          datasets: [{
+            label: 'Books Borrowed',
+            data: book_counts, // Array of book counts
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+            scales: {
+                x: {
+                    grid: {
+                        drawOnChartArea: false
+                        },
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false
+                    },
+                }
+            }
+          }
+        });
+
+        var studentPercentage = {{ student_percentage|default:0 }};
+        var facultyPercentage = {{ faculty_percentage|default:0 }};
+
+        var ctx = document.getElementById('myPieChart').getContext('2d');
+
+        var data = {
+            labels: ['Student', 'Faculty'],
+            datasets: [{
+                data: [studentPercentage, facultyPercentage],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)', // Student
+                    'rgba(255, 99, 132, 0.2)', // Faculty
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)', // Student
+                    'rgba(255, 99, 132, 1)', // Faculty
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, // To control the chart size
+                legend: {
+                    display: true,
+                    position: 'right',
+                },
+            }
+        });
+    </script>
+
+
+    <script>
+        const skillPercentageElements = document.querySelectorAll('.skill-percentage');
+        const skillColorElements = document.querySelectorAll('.skill-color');
+
+        skillPercentageElements.forEach((skillPercentageElement, index) => {
+            const skillPercentage = parseInt(skillPercentageElement.getAttribute('data-percentage'));
+            const progressBarPy = skillPercentageElement.nextElementSibling.querySelector('.circular-progress-py');
+            const valueContainerPy = skillPercentageElement.nextElementSibling.querySelector('.value-container-py');
+
+            let progressValuePy = 0;
+            let speedPy = 20;
+
+            let progressPy = setInterval(() => {
+                progressValuePy++;
+                valueContainerPy.textContent = `${progressValuePy}%`;
+                progressBarPy.style.background = `conic-gradient(
+                    rgb(7, 114, 181) ${progressValuePy * 3.6}deg,
+                    rgb(245, 245, 245) ${progressValuePy * 3.6}deg
+                )`;
+                if (progressValuePy === skillPercentage) {
+                    clearInterval(progressPy);
+                }
+            }, speedPy);
+        });
+
+        const skillPercentageElementsBooks = document.querySelectorAll('.skill-percentage-books');
+        const skillColorElementsBooks = document.querySelectorAll('.skill-color-books');
+
+        skillPercentageElementsBooks.forEach((skillPercentageElementBooks, index) => {
+            const skillPercentageBooks = parseInt(skillPercentageElementBooks.getAttribute('data-percentage-books'));
+            const progressBarPyBooks = skillPercentageElementBooks.nextElementSibling.querySelector('.circular-progress-py-books');
+            const valueContainerPyBooks = skillPercentageElementBooks.nextElementSibling.querySelector('.value-container-py-books');
+
+            let progressValuePyBooks = 0;
+            let speedPyBooks = 20;
+
+            let progressPyBooks = setInterval(() => {
+                progressValuePyBooks++;
+                valueContainerPyBooks.textContent = `${progressValuePyBooks}%`;
+                progressBarPyBooks.style.background = `conic-gradient(
+                    rgb(7, 114, 181) ${progressValuePyBooks * 3.6}deg,
+                    rgb(245, 245, 245) ${progressValuePyBooks * 3.6}deg
+                )`;
+                if (progressValuePyBooks === skillPercentageBooks) {
+                    clearInterval(progressPyBooks);
+                }
+            }, speedPyBooks);
+        });
+
+    </script>
+{% endblock %}

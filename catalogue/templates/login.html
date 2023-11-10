@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="login-section">
+        <div class="login-div">
+            <div class="login-messages-container-div">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <form class="login-form" method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div>
+                    <input class="login-field" type="text" name="username" placeholder="Enter Username">
+                </div>
+                <div>
+                    <input class="login-field" type="password" name="password" placeholder="Enter Password">
+                </div>
+                <div>
+                    <button class="login-btn" type="submit">Login</button>
+                </div>
+                <div class="login-link-to-registration-div">
+                    <a class="login-link-to-registration" href="{% url 'registration-validation' %}">Don't have an Account?</a>
+                </div>
+                <div class="login-link-to-forgot-password">
+                    <a class="login-link-to-registration" href="{% url 'forgot-password' %}">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

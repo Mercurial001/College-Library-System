@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="utmost-section-user-profile">
+        <!--        <div>-->
+        <!--            {{ user.username }}-->
+        <!--            {% if messages %}-->
+        <!--                {% for message in messages %}-->
+        <!--                    {{ message }}-->
+        <!--                {% endfor %}-->
+        <!--            {% endif %}-->
+        <!--        </div>-->
+
+        <!--        <div>-->
+        <!--            <img class="pit-logo" src="{% static 'images/' %}QR-Code-{{ user.username }}.png">-->
+        <!--        </div>-->
+        <section class="user-patron-details-section">
+            <div class="user-patron-details-div" id="user-patron-borrowed-books-div">
+                {% if user == request.user %}
+                    {% if active_books_sum_user_profile > 1 %}
+                        <h1>Your Borrowed Books</h1>
+                    {% else %}
+                        <h1>Your Borrowed Book</h1>
+                    {% endif %}
+                {% else %}
+                    {% if active_books_sum_user_profile > 1 %}
+                        <h1>Borrowed Books</h1>
+                    {% else %}
+                        <h1>Borrowed Book</h1>
+                    {% endif %}
+                {% endif %}
+                {% for patron in patrons %}
+                    <div>
+                        {% if patron.deadline == None and patron.books.all.exists %}
+                            <div style="color:rgb(194, 165, 2);">
+                                <h3>To be Confirmed...</h3>
+                            </div>
+                        {% elif patron.deadline == None and not patron.books.all.exists %}
+
+                        {% else %}
+                            <h3>Due Date:<span style="color:rgb(160, 40, 40);">{{ patron.deadline }}</span></h3>
+                        {% endif %}
+                    </div>
+                    {% for book in patron.books.all %}
+                        <div class="user-patron-borrowed-book-div">
+                            {{ book.title }} {{ book.date_borrowed }}
+                        </div>
+<!--                        <div>-->
+<!--                            <span>Date Borrowed: </span>-->
+<!--                        </div>-->
+                    {% empty %}
+                        <div>
+                            <p>No borrowed books</p>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="user-patron-details-div" id="user-patron-reserved-books-div">
+                {% if user == request.user %}
+                    {% if active_books_reserved_count_user_profile > 1 %}
+                        <h1>Your Reserved Books</h1>
+                    {% else %}
+                        <h1>Your Reserved Book</h1>
+                    {% endif %}
+                {% else %}
+                    {% if active_books_reserved_count_user_profile > 1 %}
+                        <h1>Reserved Books</h1>
+                    {% else %}
+                        <h1>Reserved Book</h1>
+                    {% endif %}
+                {% endif %}
+                {% for reservation in reservations %}
+                    <div>
+                        <div style="color:rgb(194, 165, 2); visibility: hidden;">
+                            <h3>.</h3>
+                        </div>
+                    </div>
+                    {% for book in reservation.books.all %}
+                        <div class="user-patron-reserved-book-div">
+                            {{ book.title }} {{ book.date_reserved }}
+                        </div>
+                    {% empty %}
+                        <div>
+                            <p>No Reserved Books</p>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </section>
+    </section>
+{% endblock %}

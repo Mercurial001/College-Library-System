@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section class="section-form">
+        <form method="post" action="">
+            {% csrf_token %}
+            <div>
+                {{ form.username.errors }}
+                {{ form.username }}
+            </div>
+            <div>
+                {{ form.password1.errors }}
+                {{ form.password1 }}
+            </div>
+            <div>
+                {{ form.password2.errors }}
+                {{ form.password2 }}
+            </div>
+            <div>
+                {{ form.first_name }}
+            </div>
+            <div>
+                {{ form.last_name}}
+            </div>
+            <div>
+                {{ form.email.errors }}
+                {{ form.email }}
+            </div>
+            <div>
+                {{ form.position }}
+            </div>
+            <div>
+                {{ form.course }}
+            </div>
+            <div>
+                {{ form.department }}
+            </div>
+            <div>
+                {{ form.number_loc }} {{ form.contact_no }}
+            </div>
+            <div>
+                {{ form.address }}
+            </div>
+            <div>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}
+

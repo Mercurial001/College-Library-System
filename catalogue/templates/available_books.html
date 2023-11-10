@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="available-books-sorting-section">
+        <div class="available-books-heading-div">
+            Available Books
+        </div>
+        <div class="available-books-download-pdf-div">
+            <a class="available-books-download-pdf-function" href="{% url 'available-books-pdf' %}">Download PDF</a>
+        </div>
+        <div class="available-books-container-div">
+            {% for available_books in books %}
+                <div class="available-book-div">
+                    <span class="available-books-title-span">{{ available_books.title }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

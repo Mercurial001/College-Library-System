@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="alphabetical-sorting-section">
+        <div class="alphabetical-title-heading-div">
+            <h1>Book Titles Sorted Alphabetically</h1>
+        </div>
+        <div class="alphabetical-sorting-download-pdf-div">
+            <a class="alphabetical-sorting-link-to-download-function" href="{% url 'alphabetic-pdf' %}">Download PDF</a>
+        </div>
+        <div class="alphabetical-book-container-div">
+            {% for letter, books in books_by_letter.items %}
+                {% if books  %}
+                    <div class="alphabetical-letter-heading">
+                        <h2>{{ letter }}</h2>
+                    </div>
+                    {% for book in books %}
+                        <div class="toggle-detail-btn-div">
+                            <table>
+                                <tr>
+                                    <td>Book Title:</td>
+                                    <td>{{ book.title }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Book Subtitle:</td>
+                                    <td>{{ book.subtitle }}</td>
+                                </tr>
+                            </table>
+                            <button class="toggle-title-btn" id="toggleBtn{{ book.id }}">Show Details</button>
+                        </div>
+                        <div class="book-details-table" id="bookDetails{{ book.id }}">
+                            <table>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>{{ book.book_status }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Subject:</td>
+                                    <td>{{ book.subject }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Material:</td>
+                                    <td>{{ book.material }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sub-Type:</td>
+                                    <td>{{ book.sub_type }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Call Number:</td>
+                                    <td>{{ book.call_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edition:</td>
+                                    <td>{{ book.edition }}</td>
+                                </tr>
+                                <tr>
+                                    <td>LCCN:</td>
+                                    <td>{{ book.lccn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>ISBN:</td>
+                                    <td>{{ book.isbn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>ISSN:</td>
+                                    <td>{{ book.issn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Author:</td>
+                                    <td>{{ book.author_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td>{{ book.date }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Place of Publication:</td>
+                                    <td>{{ book.info_place }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Publisher:</td>
+                                    <td>{{ book.publisher }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Date of Publication:</td>
+                                    <td>{{ book.info_date }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Copyright:</td>
+                                    <td>{{ book.info_copyright }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Extent:</td>
+                                    <td>{{ book.extent }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Other Details:</td>
+                                    <td>{{ book.other_details }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Size:</td>
+                                    <td>{{ book.size }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </section>
+    <!--    <section id="alphabetical-sorting-section">-->
+    <!--        <div class="sortation-title-div">-->
+    <!--            <h1>Book Titles Sorted Alphabetically</h1>-->
+    <!--        </div>-->
+    <!--        <a href="{% url 'alphabetic-pdf' %}">Download PDF</a>-->
+    <!--        {% for book in books %}-->
+    <!--            <div class="detail-container">-->
+    <!--                <p>Book Title: <span>{{ book }}</span></p>-->
+    <!--                <p>Book Subtitle: <span>{{ book.subtitle }}</span></p>-->
+    <!--                <ul>-->
+    <!--                    <li>Author: <span>{{ book.author_name }}</span></li>-->
+    <!--                    <li>Subject: <span>{{ book.subject }}</span></li>-->
+    <!--                    <li>Edition: <span>{{ book.edition }}</span></li>-->
+    <!--                    <li>Call Number: <span>{{ book.call_number }}</span></li>-->
+    <!--                    <li>Material: <span>{{ book.material }}</span></li>-->
+    <!--                    <li>Sub-type: <span>{{ book.sub_type }}</span></li>-->
+    <!--                    <li>Place of Publication: <span>{{ book.info_place }}</span></li>-->
+    <!--                    <li>Date of Publication: <span>{{ book.info_date }}</span></li>-->
+    <!--                    <li>Copyright: <span>{{ book.info_copyright }}</span></li>-->
+    <!--                    <li>LCCN: <span>{{ book.lccn }}</span></li>-->
+    <!--                    <li>ISBN: <span>{{ book.isbn }}</span></li>-->
+    <!--                    <li>ISSN: <span>{{ book.issn }}</span></li>-->
+    <!--                    <li>Extent: <span>{{ book.extent }}</span></li>-->
+    <!--                    <li>Size: <span>{{ book.other_details }}</span></li>-->
+    <!--                    <li>Other Details: <span>{{ book.size }}</span></li>-->
+    <!--                </ul>-->
+    <!--            </div>-->
+    <!--        {% endfor %}-->
+    <!--    </section>-->
+
+    <!--                    <div>-->
+    <!--                        <p>Book Title: <span>{{ book }}</span></p>-->
+    <!--                        <p>Book Subtitle: <span>{{ book.subtitle }}</span></p>-->
+    <!--                        <ul>-->
+    <!--                            <li>Author: <span>{{ book.author_name }}</span></li>-->
+    <!--                            <li>Subject: <span>{{ book.subject }}</span></li>-->
+    <!--                            <li>Edition: <span>{{ book.edition }}</span></li>-->
+    <!--                            <li>Call Number: <span>{{ book.call_number }}</span></li>-->
+    <!--                            <li>Material: <span>{{ book.material }}</span></li>-->
+    <!--                            <li>Sub-type: <span>{{ book.sub_type }}</span></li>-->
+    <!--                            <li>Place of Publication: <span>{{ book.info_place }}</span></li>-->
+    <!--                            <li>Date of Publication: <span>{{ book.info_date }}</span></li>-->
+    <!--                            <li>Copyright: <span>{{ book.info_copyright }}</span></li>-->
+    <!--                            <li>LCCN: <span>{{ book.lccn }}</span></li>-->
+    <!--                            <li>ISBN: <span>{{ book.isbn }}</span></li>-->
+    <!--                            <li>ISSN: <span>{{ book.issn }}</span></li>-->
+    <!--                            <li>Extent: <span>{{ book.extent }}</span></li>-->
+    <!--                            <li>Size: <span>{{ book.other_details }}</span></li>-->
+    <!--                            <li>Other Details: <span>{{ book.size }}</span></li>-->
+    <!--                        </ul>-->
+    <!--                    </div>-->
+{% endblock %}

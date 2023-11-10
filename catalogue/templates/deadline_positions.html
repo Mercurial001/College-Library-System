@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    {% for patron in patrons %}
+        <div>
+            {{ patron.first_name }}
+        </div>
+    {% endfor %}
+{% endblock %}

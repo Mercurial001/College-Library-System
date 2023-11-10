@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="cataloging-section">
+        <div class="catalogue-form-container">
+            <form method="post" action="">
+                <div class="message-box-container-div">
+                    <div class="message-box">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p>{{ message }}
+                                    <span class="close-btn">
+                                        <i id="close-btn" class="fa fa-window-close" aria-hidden="true"></i>
+                                    </span>
+                                </p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% csrf_token %}
+                <div class="catalogue-form-div" id="title-information-div-container">
+                    <div class="catalogue-form-inner-div" id="title-information-div">
+                        <div class="catalogue-form-title-div">
+                            Title Information
+                        </div>
+                        <div class="catalogue-form-field-container-div">
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.title.label }}
+                                </div>
+                                <div>
+                                    {{ form.title }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.subject.label }}
+                                </div>
+                                <div>
+                                    {{ form.subject }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.subtitle.label }}
+                                </div>
+                                <div>
+                                    {{ form.subtitle }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.call_number.label }}
+                                </div>
+                                <div>
+                                    {{ form.call_number }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.edition.label }}
+                                </div>
+                                <div>
+                                    {{ form.edition }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogue-form-div" id="public-information-container-div">
+                    <div class="catalogue-form-inner-div" id="public-information-div">
+                        <div class="catalogue-form-title-div">
+                             Publication Information
+                        </div>
+                        <div class="catalogue-form-field-container-div">
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.info_place.label }}
+                                </div>
+                                <div>
+                                    {{ form.info_place }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.publisher.label }}
+                                </div>
+                                <div>
+                                    {{ form.publisher }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.info_date.label }}
+                                </div>
+                                <div>
+                                    {{ form.info_date }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.info_copyright.label }}
+                                </div>
+                                <div>
+                                    {{ form.info_copyright }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.book_price.label }}
+                                </div>
+                                <div>
+                                    {{ form.book_price }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogue-form-div" id="standard-numbers-container-div">
+                    <div class="catalogue-form-inner-div" id="standard-numbers-div">
+                        <div class="catalogue-form-title-div">
+                            Standard Numbers
+                        </div>
+                        <div class="catalogue-form-field-container-div">
+                            <div>
+                                <div class="form-title-div" style="text-transform: uppercase;">
+                                    {{ form.lccn.label }}
+                                </div>
+                                <div>
+                                    {{ form.lccn }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div" style="text-transform: uppercase;">
+                                    {{ form.isbn.label }}
+                                </div>
+                                <div>
+                                    {{ form.isbn }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div" style="text-transform: uppercase;">
+                                    {{ form.issn.label }}
+                                </div>
+                                <div>
+                                    {{ form.issn }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogue-form-lower-div" id="physical-description-container-div">
+                    <div class="catalogue-form-inner-div" id="physical-description-div">
+                        <div class="catalogue-form-title-div">
+                            Physical Description
+                        </div>
+                        <div class="catalogue-form-field-container-lower-div">
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.extent.label }}
+                                </div>
+                                <div>
+                                    {{ form.extent }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.other_details.label }}
+                                </div>
+                                <div>
+                                    {{ form.other_details }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.size.label }}
+                                </div>
+                                <div>
+                                    {{ form.size }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogue-form-lower-div" id="author-container-div">
+                    <div class="catalogue-form-inner-div" id="author-div">
+                        <div class="catalogue-form-title-div">
+                            Author
+                        </div>
+                        <div class="catalogue-form-field-container-lower-div">
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.author_name.label }}
+                                </div>
+                                <div>
+                                    {{ form.author_name }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.editor.label }}
+                                </div>
+                                <div>
+                                    {{ form.editor }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.date.label }}
+                                </div>
+                                <div>
+                                    {{ form.date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogue-form-lower-div" id="material-type-container-div">
+                    <div class="catalogue-form-inner-div" id="material-type-div">
+                        <div class="catalogue-form-title-div">
+                            Material Type
+                        </div>
+                        <div class="catalogue-form-field-container-lower-div">
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.material.label }}
+                                </div>
+                                <div>
+                                    {{ form.material }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-title-div">
+                                    {{ form.sub_type.label }}
+                                </div>
+                                <div>
+                                    {{ form.sub_type }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogue-btn-cont-div">
+                    <button class="catalogue-submit-btn" type="submit">Catalogue Book</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

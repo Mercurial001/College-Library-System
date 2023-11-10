@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="patron-profile-admin-section">
+        <div class="patron-profile-admin-utmost-container-div">
+            <div id="patron-profile-admin-board-div">
+                {% for names in patrons %}
+                    <div class="patron-profile-admin-heading-container-div">
+                        Patron: {{ names.patron }}
+                    </div>
+                    <div class="patron-profile-admin-information-detail-container-div">
+                        <div class="patron-profile-admin-fine-container-div">
+                            {% if not names.fine_amount == 0.00 %}
+                                <div>
+                                    Fine amount {{ names.fine_amount }}
+                                </div>
+                                <span>
+                                    <a href="{% url 'fines-paid-cash' names.patron %}">Pay Fines (Cash)</a>
+                                </span>
+                            {% else %}
+                                <div>
+                                    No Fines
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="patron-profile-admin-deadline-container-div">
+                            <h1>Due Date: {{ names.deadline }}</h1>
+                        </div>
+                        <div class="patron-profile-admin-borrowed-books-container-div">
+                            <div class="patron-profile-admin-book-borrowed-heading-div">
+                                <h1>Borrowed Books:</h1>
+                            </div>
+                            <div class="patron-profile-admin-books-container-div">
+                                {% for book in names.books.all %}
+                                    <div class="patron-profile-book-div">
+                                        Book Title:
+                                        <span class="book-title-h3">{{ book.title }}
+                                            <a class="patron-profile-admin-check-out-function" href="{% url 'book-returns' book.isbn names.id %}">
+                                                Return
+                                            </a>
+                                        </span>
+                                    </div>
+                                {% empty %}
+                                    <p>Cleared</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="patron-profile-admin-form-container-div">
+                <form class="patron-profile-admin-form" method="post">
+                    {% csrf_token %}
+                    <div class="patron-profile-admin-patron-name-field-hidden">
+                        {{ form.patron }}
+                    </div>
+                    <div class="patron-profile-admin-deadline-field-div">
+                        {{ form.deadline }}
+                    </div>
+                    <div class="patron-profile-admin-books-field-div">
+                        {{ form.books }}
+                    </div>
+                    <div class="patron-profile-admin-btn-div">
+                        <button class="patron-profile-admin-btn" type="submit">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

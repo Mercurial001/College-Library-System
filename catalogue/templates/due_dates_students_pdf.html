@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="patron-due-date-block-student-div">
+        <h3>Students</h3>
+
+        {% for checkin in overdue_check %}
+            <div class="patron-due-date-block-student">
+                <div class="patron-due-dates-student-name-div" id="patron-student-name-block{{ checkin.id }}">
+                    <p>Patron: <a href="{% url 'patron-borrows' checkin.id %}">{{ checkin.patron }}</a></p>
+                    <div class="patron-due-dates-student-btn-container-div">
+                        <button class="patron-due-dates-students-btn" id="patron-students-due-dates-btn{{ checkin.id }}">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="patron-due-dates-student-details" id="patron-due-dates-students-details{{ checkin.id }}">
+                    <div class="due-dates-students-borrowed-books-header">
+                        Borrowed Books:
+                    </div>
+                    <div class="due-dates-borrowed-books-div">
+                        <table>
+                            {% for book in checkin.books.all %}
+                            <tr>
+                                <td>Book Title: </td>
+                                <td class="due-date-borrowed-book">{{ book.title }}</td>
+                            </tr>
+                            {% empty %}
+                                Cleared
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="patron-due-dates-thin-line-divider"></div>
+                    <div class="due-dates-lower-information-table-div">
+                        <table>
+                            <tr>
+                                <td>Fine Amount: </td>
+                                <td>&#8369 {{ checkin.fine_amount }}</td>
+                            </tr>
+                            <tr>
+                                <td>Deadline: </td>
+                                <td>{{ checkin.deadline }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <div>
+            No due dates
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

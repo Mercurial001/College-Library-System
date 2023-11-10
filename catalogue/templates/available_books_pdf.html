@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .available-books-heading-div{
+            text-align:center;
+        /*    background-color: rgb(5, 50, 50);*/
+            font-size: 25px;
+            padding: 15px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .available-books-title-span{
+            font-weight: 800;
+        }
+
+        .available-book-div{
+            margin:auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 93%;
+
+        }
+    </style>
+</head>
+<body>
+    <section id="available-books-sorting-section">
+        <div class="available-books-heading-div">
+            Available Books
+        </div>
+        <div class="available-books-container-div">
+            {% for available_books in books %}
+                <div class="available-book-div">
+                    <span class="available-books-title-span">{{ available_books.title }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="user-profile-book-reserve-section">
+        <div class="user-profile-book-reserve-utmost-container-div">
+            <div class="user-profile-book-reserve-title-heading-div">
+                <h1>reserve a book</h1>
+            </div>
+            {% if user == request.user %}
+                <div class="user-profile-reservation-form-section">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="patron-field" style="display: none;">
+                            {{ reservation_form.patron }}
+                        </div>
+                        <div>
+                            {{ reservation_form.books }}
+                        </div>
+                        <button class="user-profile-reserve-books-btn" name="patron-reservation-form" type="submit">Reserve Book</button>
+                    </form>
+                </div>
+            {% else %}
+
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

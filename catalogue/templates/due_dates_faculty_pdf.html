@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="patron-due-date-block-faculty-div">
+        <h3>Faculty</h3>
+        {% for faculty in overdue_checkins_faculty %}
+            <div class="patron-due-date-block-faculty">
+                <div class="patron-due-dates-faculty-name-div" id="patron-due-date-name{{ faculty.id }}">
+                    <p>Patron: <a href="{% url 'patron-borrows' faculty.id %}">{{ faculty.patron }}</a></p>
+                    <div class="patron-due-dates-student-btn-container-div">
+                        <button class="patron-due-dates-faculty-btn" id="patron-faculty-due-dates-btn{{ faculty.id }}">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <div class="patron-due-dates-faculty-details" id="patron-due-dates-faculty-details{{ faculty.id }}">
+                    <div class="due-dates-students-borrowed-books-header">
+                        Borrowed Books:
+                    </div>
+                    <div class="due-dates-borrowed-books-div">
+                        <table>
+                            {% for book in faculty.books.all %}
+                            <tr>
+                                <td>Book Title: </td>
+                                <td class="due-date-borrowed-book">{{ book.title }}</td>
+                            </tr>
+                            {% empty %}
+                                Cleared
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="patron-due-dates-thin-line-divider"></div>
+                    <div class="due-dates-lower-information-table-div">
+                        <table>
+                            <tr>
+                                <td>Fine Amount: </td>
+                                <td>&#8369 {{ faculty.fine_amount }}</td>
+                            </tr>
+                            <tr>
+                                <td>Deadline</td>
+                                <td>{{ faculty.deadline }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        <div>
+            No due dates
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

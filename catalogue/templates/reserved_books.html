@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="reserved-books-section">
+        <div class="reserved-books-utmost-container-div">
+            <div class="reserved-books-title-heading-div">
+                <h1>Reserved Books</h1>
+            </div>
+            <div class="reserved-books-download-pdf-div">
+                <a class="reserved-books-download-pdf-function" href="{% url 'reserved-books-pdf' %}">Download PDF</a>
+            </div>
+            <div class="reserved-books-table-container-div">
+                <table class="reserved-books-table">
+                    <tr class="reserved-books-table-row">
+                        <th class="reserved-books-table-head">
+                            {% if active_books_reserved_count_report > 1 %}
+                                <p>Reserved Books</p>
+                            {% else %}
+                                <p>Reserved Book</p>
+                            {% endif %}
+                        </th>
+                        <th class="reserved-books-table-head">
+                            <p>Patron</p>
+                        </th>
+                        <th class="reserved-books-table-head">
+                            <p>Reserved Date</p>
+                        </th>
+                    </tr>
+                {% for reserved_books in books %}
+                    {% for book in reserved_books.books.all %}
+                        <tr class="reserved-books-table-row">
+                            <td class="reserved-books-table-data">{{ book.title }}</td>
+                            <td class="reserved-books-table-data">{{ reserved_books.patron }}</td>
+                            <td class="reserved-books-table-data">{{ book.date_reserved }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}

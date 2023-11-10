@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <section id="registrants-section">
+        <div class="registrants-list-utmost-container-div">
+            <div class="registrants-list-title-heading-div">
+                <h3>Registrants</h3>
+            </div>
+            <div class="registrants-div">
+                {% for registration in registrations %}
+                    <a href="{% url 'registering_profile' registration.username %}">
+                        <div class="registrants-confirmation-div">
+                            {{ registration.username }}
+                        </div>
+                    </a>
+                {% empty %}
+                    <div>
+                        No registering patrons awaiting validation
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

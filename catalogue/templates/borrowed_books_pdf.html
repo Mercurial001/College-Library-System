@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .borrowed-books-table{
+            border-radius: 5px;
+            border-collapse: collapse;
+            margin: auto;
+            margin-top: 40px;
+            width: 90%;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+
+        .borrowed-books-table-head{
+            font-family: Lato;
+            text-transform: uppercase;
+            border-radius: 5px;
+            background-color: rgb(5, 50, 50);
+            color: beige;
+        }
+
+        .borrowed-books-table-head p{
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .borrowed-books-table-head,.borrowed-books-table-data{
+            border: 1px solid rgb(206, 245, 242);
+            text-align: left;
+            padding: 8px;
+        }
+
+        .borrowed-books-table-data{
+            font-weight: 800;
+        }
+        .borrowed-books-table-row:nth-child(odd) {
+            color: rgb(30, 30, 30);
+        }
+
+        .borrowed-books-table-row:nth-child(even) {
+            background-color: rgb(3, 153, 142);
+            color: beige; !important
+        }
+
+        .borrowed-book-heading-div{
+            text-align: center;
+            font-weight: 800;
+            font-size: 25px;
+            color: beige;
+            background-color: rgb(5,50,50);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="borrowed-books-table-container-div">
+        <div class="borrowed-book-heading-div">
+            Borrowed Books
+        </div>
+        <table class="borrowed-books-table">
+            <tr class="borrowed-books-table-row">
+                <th class="borrowed-books-table-head">
+                    <p>Book Borrowed</p>
+                </th>
+                <th class="borrowed-books-table-head">
+                    <p>Borrowed By</p>
+                </th>
+                <th class="borrowed-books-table-head">
+                    <p>Borrowed On</p>
+                </th>
+            </tr>
+            {% for checkin in books %}
+                {% for book in checkin.books.all %}
+                <tr class="borrowed-books-table-row">
+                    <td class="borrowed-books-table-data">{{ book.title }}</td>
+                    <td class="borrowed-books-table-data">{{ checkin.patron }}</td>
+                    <td class="borrowed-books-table-data">{{ book.date_borrowed }}</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
