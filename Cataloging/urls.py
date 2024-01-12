@@ -87,9 +87,9 @@ urlpatterns = [
          name='borrow-search-book'),
     path('user-profile/reserve-search-book/<str:username>/<int:id>/', views.user_patron_home_search_reserve_book,
          name='reserve-search-book'),
-] # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # path('profile/patron/', views.patron_profile, name='profile-patron'),

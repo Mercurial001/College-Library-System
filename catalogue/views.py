@@ -1067,7 +1067,7 @@ def authentication(request):
             login(request, user)
             return redirect('homepage')
         else:
-            messages.success(request, "Invalid form data. Please try again")
+            messages.error(request, "Invalid form data. Please try again")
 
     return render(request, 'login.html', {'overdue_checkins': overdue_checkins})
 
