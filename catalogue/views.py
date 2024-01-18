@@ -1708,13 +1708,6 @@ def registration_validation_online(request):
                 hashed_password = make_password(password1)
                 user.password = hashed_password
 
-                # cap = cv2.VideoCapture(0)  # Use the default camera (usually the built-in webcam)
-                # ret, frame = cap.read()
-                # cap.release()  # Release the camera
-                # if ret:
-                #     # Convert the captured frame to JPEG format
-                #     _, buffer = cv2.imencode('.jpg', frame)
-
                 user.save()
 
                 # Create Register Instance
