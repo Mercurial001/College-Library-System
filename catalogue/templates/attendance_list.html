@@ -49,6 +49,7 @@
                                 Download PDF
                             </a>
                         </div>
+
                         {% for attendance in attendances_default %}
                             <tr class="attendance-table-row">
                                 <td class="attendance-table-data">
@@ -75,7 +76,7 @@
                         {% if attendances %}
                             <div class="attendance-list-download-pdf-filtered-div">
                                 <a class="attendance-list-download-pdf-filtered-function"
-                                   href="{% url 'attendance-list-daily-pdf' %}?date={{ selected_date }}">
+                                   href="{% url 'attendance-list-daily-pdf' %}?date={{ selected_date_string }}">
                                     Download PDF for {{ selected_date }}
                                 </a>
                             </div>
